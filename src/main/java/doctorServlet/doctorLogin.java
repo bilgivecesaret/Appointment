@@ -33,7 +33,7 @@ public class doctorLogin extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("examplePU");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("my_persistence_unit");
         EntityManager em = emf.createEntityManager();
 
         try {

@@ -1,14 +1,38 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package entity;
 
-package model;
-
-import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Collection;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ *
+ * @author bilgi
+ */
 @Entity
 @Table(name = "doctor")
+@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Doctor.findAll", query = "SELECT d FROM Doctor d")})
+    @NamedQuery(name = "Doctor.findAll", query = "SELECT d FROM Doctor d"),
+    @NamedQuery(name = "Doctor.findById", query = "SELECT d FROM Doctor d WHERE d.id = :id"),
+    @NamedQuery(name = "Doctor.findByFullname", query = "SELECT d FROM Doctor d WHERE d.fullname = :fullname"),
+    @NamedQuery(name = "Doctor.findByUsername", query = "SELECT d FROM Doctor d WHERE d.username = :username"),
+    @NamedQuery(name = "Doctor.findByPassword", query = "SELECT d FROM Doctor d WHERE d.password = :password")})
 public class Doctor implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -18,30 +42,23 @@ public class Doctor implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @javax.validation.constraints.NotNull
-    @javax.validation.constraints.Size(min = 1, max = 45)
-    @Column(name = "name")
-    private String name;
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "fullname")
+    private String fullname;
     @Basic(optional = false)
-    @javax.validation.constraints.NotNull
-    @javax.validation.constraints.Size(min = 1, max = 45)
-    @Column(name = "surname")
-    private String surname;
-    @Basic(optional = false)
-    @javax.validation.constraints.NotNull
-    @javax.validation.constraints.Size(min = 1, max = 45)
+    @NotNull
+    @Size(min = 1, max = 45)
     @Column(name = "username")
     private String username;
     @Basic(optional = false)
-    @javax.validation.constraints.NotNull
-    @javax.validation.constraints.Size(min = 1, max = 15)
+    @NotNull
+    @Size(min = 1, max = 15)
     @Column(name = "password")
     private String password;
     @JoinColumn(name = "department_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Department departmentId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "doctorId")
-    private Collection<Appointment> appointmentCollection;
 
     public Doctor() {
     }
@@ -50,10 +67,9 @@ public class Doctor implements Serializable {
         this.id = id;
     }
 
-    public Doctor(Integer id, String name, String surname, String username, String password) {
+    public Doctor(Integer id, String fullname, String username, String password) {
         this.id = id;
-        this.name = name;
-        this.surname = surname;
+        this.fullname = fullname;
         this.username = username;
         this.password = password;
     }
@@ -66,20 +82,12 @@ public class Doctor implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFullname() {
+        return fullname;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 
     public String getUsername() {
@@ -106,14 +114,6 @@ public class Doctor implements Serializable {
         this.departmentId = departmentId;
     }
 
-    public Collection<Appointment> getAppointmentCollection() {
-        return appointmentCollection;
-    }
-
-    public void setAppointmentCollection(Collection<Appointment> appointmentCollection) {
-        this.appointmentCollection = appointmentCollection;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -136,7 +136,7 @@ public class Doctor implements Serializable {
 
     @Override
     public String toString() {
-        return "model.Doctor[ id=" + id + " ]";
+        return "entity.Doctor[ id=" + id + " ]";
     }
     
 }

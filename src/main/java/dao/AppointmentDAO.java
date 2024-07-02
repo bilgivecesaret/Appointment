@@ -1,16 +1,18 @@
 
 package dao;
 
+import entity.Appointment;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.persistence.Query;
-import model.Appointment;
-import model.JPA;
 
 public class AppointmentDAO {
-    EntityManager em = JPA.getEntityManagerFactory().createEntityManager();
-
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("my_persistence_unit");
+    EntityManager em = emf.createEntityManager();
+    
     // save appointment
     public void save(Appointment appointment) {
         em.getTransaction().begin();
@@ -28,7 +30,7 @@ public class AppointmentDAO {
     }
 
     // find appointment
-    public Appointment find(Long id) {
+    public Appointment find(Integer id) {
         Appointment c = new Appointment();
         c = em.find(Appointment.class, id);
         // JPAUtil.shutdown();
@@ -36,7 +38,7 @@ public class AppointmentDAO {
     }
 
     // delete appointment
-    public void delete(Long id) {
+    public void delete(Integer id) {
         Appointment c = new Appointment();
         c = em.find(Appointment.class, id);
         em.getTransaction().begin();

@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
+
 package doctorServlet;
 
 import entity.Doctor;
@@ -44,7 +41,7 @@ public class showAppointments extends HttpServlet {
 
         try {
             Query query = em.createQuery("SELECT a FROM Appointment a WHERE a.doctorId = :doctorId");
-            query.setParameter("doctorId", doctor.getDoctorId());
+            query.setParameter("doctorId", doctor.getId());
 
             List<Appointment> appointments = query.getResultList();
             request.setAttribute("appointments", appointments);

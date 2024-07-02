@@ -1,9 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
+
 package adminServlet;
 
+import entity.Department;
 import entity.Doctor;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -38,10 +36,12 @@ public class updateDoctor extends HttpServlet {
             em.getTransaction().begin();
             Doctor doctor = em.find(Doctor.class, doctorId);
             if (doctor != null) {
-                doctor.setDoctorUsername(username);
-                doctor.setDoctorPassword(password);
-                doctor.setDoctorFullName(fullName);
-                doctor.setDoctorDepartment(newDepartment);
+                doctor.setUsername(username);
+                doctor.setPassword(password);
+                doctor.setFullname(fullName);
+                Department d = new Department();
+                d = em.find(Department.class, newDepartment);
+                doctor.setDepartmentId(d);
             }
             em.getTransaction().commit();
 

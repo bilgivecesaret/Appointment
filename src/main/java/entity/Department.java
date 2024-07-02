@@ -1,14 +1,38 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package entity;
 
-package model;
-
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
+/**
+ *
+ * @author bilgi
+ */
 @Entity
 @Table(name = "department")
+@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Department.findAll", query = "SELECT d FROM Department d")})
+    @NamedQuery(name = "Department.findAll", query = "SELECT d FROM Department d"),
+    @NamedQuery(name = "Department.findById", query = "SELECT d FROM Department d WHERE d.id = :id"),
+    @NamedQuery(name = "Department.findByName", query = "SELECT d FROM Department d WHERE d.name = :name")})
 public class Department implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -18,8 +42,8 @@ public class Department implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @javax.validation.constraints.NotNull
-    @javax.validation.constraints.Size(min = 1, max = 45)
+    @NotNull
+    @Size(min = 1, max = 45)
     @Column(name = "name")
     private String name;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "departmentId")
@@ -53,6 +77,7 @@ public class Department implements Serializable {
         this.name = name;
     }
 
+    @XmlTransient
     public Collection<Doctor> getDoctorCollection() {
         return doctorCollection;
     }
@@ -83,7 +108,7 @@ public class Department implements Serializable {
 
     @Override
     public String toString() {
-        return "model.Department[ id=" + id + " ]";
+        return "entity.Department[ id=" + id + " ]";
     }
     
 }

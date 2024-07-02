@@ -33,12 +33,12 @@
                         <button class="btn btn-success dropdown-toggle" type="button"
                                 id="dropdownMenuButton1" data-bs-toggle="dropdown"
                                 aria-expanded="false">
-                            <i class="fa-solid fa-circle-user"></i> userObj.fullName 
+                            <i class="fa-solid fa-circle-user"></i> ${userObj.getFullname()}
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                             <li><a class="dropdown-item" href="change_password.jsp">Change
                                     Password</a></li>
-                            <li><a class="dropdown-item" href="../patientLogout">Logout</a></li>
+                            <li><a class="dropdown-item" href="patientLogout">Logout</a></li>
 
                         </ul>
                     </div>

@@ -1,5 +1,6 @@
 package adminServlet;
 
+import entity.Department;
 import entity.Doctor;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -30,8 +31,10 @@ public class addDoctor extends HttpServlet {
 
         em.getTransaction().begin();
         Doctor doctor = new Doctor();
-        doctor.setDoctorFullName(name);
-        doctor.setDoctorDepartment(department);
+        doctor.setFullname(name);
+        Department d = new Department();
+        d = em.find(Department.class, department);
+        doctor.setDepartmentId(d);
         em.persist(doctor);
         em.getTransaction().commit();
 

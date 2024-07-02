@@ -1,15 +1,17 @@
 
 package dao;
 
+import entity.Department;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.persistence.Query;
-import model.Department;
-import model.JPA;
 
 public class DepartmentDAO {
-    EntityManager em = JPA.getEntityManagerFactory().createEntityManager();
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("my_persistence_unit");
+    EntityManager em = emf.createEntityManager();
 
     // save department
     public void save(Department department) {
@@ -28,7 +30,7 @@ public class DepartmentDAO {
     }
 
     // find department
-    public Department find(Long id) {
+    public Department find(Integer id) {
         Department c = new Department();
         c = em.find(Department.class, id);
         // JPAUtil.shutdown();
@@ -36,7 +38,7 @@ public class DepartmentDAO {
     }
 
     // delete department
-    public void delete(Long id) {
+    public void delete(Integer id) {
         Department c = new Department();
         c = em.find(Department.class, id);
         em.getTransaction().begin();

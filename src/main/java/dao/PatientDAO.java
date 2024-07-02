@@ -1,15 +1,17 @@
 
 package dao;
 
+import entity.Patient;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.persistence.Query;
-import model.Patient;
-import model.JPA;
 
 public class PatientDAO {
-    EntityManager em = JPA.getEntityManagerFactory().createEntityManager();
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("my_persistence_unit");
+    EntityManager em = emf.createEntityManager();
 
     // save patient
     public void save(Patient patient) {
@@ -28,7 +30,7 @@ public class PatientDAO {
     }
 
     // find patient
-    public Patient find(Long id) {
+    public Patient find(Integer id) {
         Patient c = new Patient();
         c = em.find(Patient.class, id);
         // JPAUtil.shutdown();
@@ -36,7 +38,7 @@ public class PatientDAO {
     }
 
     // delete patient
-    public void delete(Long id) {
+    public void delete(Integer id) {
         Patient c = new Patient();
         c = em.find(Patient.class, id);
         em.getTransaction().begin();

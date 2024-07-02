@@ -1,15 +1,16 @@
 package dao;
 
+import entity.Doctor;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.persistence.Query;
-import model.Doctor;
-import model.JPA;
-
 public class DoctorDAO {
 
-    EntityManager em = JPA.getEntityManagerFactory().createEntityManager();
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("my_persistence_unit");
+    EntityManager em = emf.createEntityManager();
 
     // save doctor
     public void save(Doctor doctor) {
@@ -28,7 +29,7 @@ public class DoctorDAO {
     }
 
     // find doctor
-    public Doctor find(Long id) {
+    public Doctor find(Integer id) {
         Doctor c = new Doctor();
         c = em.find(Doctor.class, id);
         // JPAUtil.shutdown();
@@ -36,7 +37,7 @@ public class DoctorDAO {
     }
 
     // delete doctor
-    public void delete(Long id) {
+    public void delete(Integer id) {
         Doctor c = new Doctor();
         c = em.find(Doctor.class, id);
         em.getTransaction().begin();

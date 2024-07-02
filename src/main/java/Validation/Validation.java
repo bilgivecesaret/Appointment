@@ -78,4 +78,19 @@ public class Validation {
             return false;
         }
     }
+    
+    public static boolean checkTime(String time) {
+        // saat formatı hh:dd:ss
+        String timeRegex = "^\\d{2}:\\d{2}:\\d{2}$";
+        if (!Pattern.matches(timeRegex, time)) {
+            return false;
+        }
+
+        try {
+            java.time.LocalTime.parse(time);
+            return true;
+        } catch (java.time.format.DateTimeParseException e) {
+            return false;
+        }
+    }
 }

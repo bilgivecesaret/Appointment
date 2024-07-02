@@ -1,14 +1,39 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package entity;
 
-package model;
-
-import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Collection;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ *
+ * @author bilgi
+ */
 @Entity
 @Table(name = "patient")
+@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Patient.findAll", query = "SELECT p FROM Patient p")})
+    @NamedQuery(name = "Patient.findAll", query = "SELECT p FROM Patient p"),
+    @NamedQuery(name = "Patient.findById", query = "SELECT p FROM Patient p WHERE p.id = :id"),
+    @NamedQuery(name = "Patient.findByTc", query = "SELECT p FROM Patient p WHERE p.tc = :tc"),
+    @NamedQuery(name = "Patient.findByFullname", query = "SELECT p FROM Patient p WHERE p.fullname = :fullname"),
+    @NamedQuery(name = "Patient.findByGender", query = "SELECT p FROM Patient p WHERE p.gender = :gender"),
+    @NamedQuery(name = "Patient.findByPhone", query = "SELECT p FROM Patient p WHERE p.phone = :phone"),
+    @NamedQuery(name = "Patient.findByEmail", query = "SELECT p FROM Patient p WHERE p.email = :email"),
+    @NamedQuery(name = "Patient.findByPassword", query = "SELECT p FROM Patient p WHERE p.password = :password")})
 public class Patient implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -18,47 +43,37 @@ public class Patient implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @javax.validation.constraints.NotNull
-    @javax.validation.constraints.Size(min = 1, max = 11)
+    @NotNull
+    @Size(min = 1, max = 11)
     @Column(name = "tc")
     private String tc;
     @Basic(optional = false)
-    @javax.validation.constraints.NotNull
-    @javax.validation.constraints.Size(min = 1, max = 45)
-    @Column(name = "name")
-    private String name;
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "fullname")
+    private String fullname;
     @Basic(optional = false)
-    @javax.validation.constraints.NotNull
-    @javax.validation.constraints.Size(min = 1, max = 45)
-    @Column(name = "surname")
-    private String surname;
-    @Basic(optional = false)
-    @javax.validation.constraints.NotNull
-    @javax.validation.constraints.Size(min = 1, max = 6)
+    @NotNull
+    @Size(min = 1, max = 6)
     @Column(name = "gender")
     private String gender;
     // @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message="Invalid phone/fax format, should be as xxx-xxx-xxxx")//if the field contains phone or fax number consider using this annotation to enforce field validation
     @Basic(optional = false)
-    @javax.validation.constraints.NotNull
-    @javax.validation.constraints.Size(min = 1, max = 15)
+    @NotNull
+    @Size(min = 1, max = 15)
     @Column(name = "phone")
     private String phone;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
-    @javax.validation.constraints.Size(max = 45)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
     @Column(name = "email")
     private String email;
     @Basic(optional = false)
-    @javax.validation.constraints.NotNull
-    @javax.validation.constraints.Size(min = 1, max = 45)
-    @Column(name = "username")
-    private String username;
-    @Basic(optional = false)
-    @javax.validation.constraints.NotNull
-    @javax.validation.constraints.Size(min = 1, max = 15)
+    @NotNull
+    @Size(min = 1, max = 15)
     @Column(name = "password")
     private String password;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "patientId")
-    private Collection<Appointment> appointmentCollection;
 
     public Patient() {
     }
@@ -67,14 +82,13 @@ public class Patient implements Serializable {
         this.id = id;
     }
 
-    public Patient(Integer id, String tc, String name, String surname, String gender, String phone, String username, String password) {
+    public Patient(Integer id, String tc, String fullname, String gender, String phone, String email, String password) {
         this.id = id;
         this.tc = tc;
-        this.name = name;
-        this.surname = surname;
+        this.fullname = fullname;
         this.gender = gender;
         this.phone = phone;
-        this.username = username;
+        this.email = email;
         this.password = password;
     }
 
@@ -94,20 +108,12 @@ public class Patient implements Serializable {
         this.tc = tc;
     }
 
-    public String getName() {
-        return name;
+    public String getFullname() {
+        return fullname;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 
     public String getGender() {
@@ -134,28 +140,12 @@ public class Patient implements Serializable {
         this.email = email;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public Collection<Appointment> getAppointmentCollection() {
-        return appointmentCollection;
-    }
-
-    public void setAppointmentCollection(Collection<Appointment> appointmentCollection) {
-        this.appointmentCollection = appointmentCollection;
     }
 
     @Override
@@ -180,7 +170,7 @@ public class Patient implements Serializable {
 
     @Override
     public String toString() {
-        return "model.Patient[ id=" + id + " ]";
+        return "entity.Patient[ id=" + id + " ]";
     }
     
 }
