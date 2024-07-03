@@ -45,8 +45,12 @@
                             <input required name="fullname" type="text" class="form-control">
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Gender</label> 
-                            <input required name="fullname" type="text" class="form-control">
+                            <label>Gender</label> 
+                            <select class="form-control" name="gender" required>
+                                <option value="">--select--</option>
+                                <option value="MALE">MALE</option>
+                                <option value="FEMALE">FEMALE</option>
+                            </select>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Phone Number</label> 

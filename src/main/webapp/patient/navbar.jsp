@@ -1,4 +1,4 @@
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="b" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page isELIgnored="false"%>
 <nav class="navbar navbar-expand-lg navbar-dark bg-success">
     <div class="container-fluid">
@@ -9,12 +9,12 @@
                 aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
-            <c:if test="${empty userObj}">
+            <b:if test="${empty userObj}">
                 <a  href="http://localhost:8080/Appointment/index.jsp"></a>
-            </c:if>
-            <c:if test="${not empty userObj}">
+            </b:if>
+            <b:if test="${not empty userObj}">
                 <a  href="http://localhost:8080/Appointment/patient/index.jsp"></a>
-            </c:if>
+            </b:if>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
@@ -36,11 +36,11 @@
                 <c:if test="${not empty userObj}">
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" 
-                           href="user_appointment.jsp">APPOINTMENT</a>
+                           href="http://localhost:8080/Appointment/patient/patientAppointment.jsp">NEW APPOINTMENT</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" 
-                            href="view_appointment.jsp">VIEW APPOINTMENT</a>
+                            href="http://localhost:8080/Appointment/patient/viewAppointment.jsp">VIEW APPOINTMENT</a>
                     </li>
                     <div class="dropdown">
                         <button class="btn btn-success dropdown-toggle" type="button"

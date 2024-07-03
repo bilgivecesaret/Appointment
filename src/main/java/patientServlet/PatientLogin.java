@@ -25,7 +25,6 @@ public class PatientLogin extends HttpServlet {
         HttpSession session = request.getSession();
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("my_persistence_unit");
         EntityManager em = emf.createEntityManager();
-        String root = request.getContextPath();
         try {
             Query query = em.createQuery("SELECT d FROM Patient d WHERE d.email = :email AND d.password = :password", Patient.class);
             query.setParameter("email", email);
