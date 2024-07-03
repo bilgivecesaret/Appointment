@@ -8,27 +8,40 @@
                 data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span><a  href="../index.jsp">
+            <span class="navbar-toggler-icon"></span>
+            <c:if test="${empty userObj}">
+                <a  href="http://localhost:8080/Appointment/index.jsp"></a>
+            </c:if>
+            <c:if test="${not empty userObj}">
+                <a  href="http://localhost:8080/Appointment/patient/index.jsp"></a>
+            </c:if>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <c:if test="${empty userObj }">
-                    <li class="nav-item"><a class="nav-link active"
-                                            aria-current="page" href="doctor_login.jsp">ADMIN</a></li>
-                    <li class="nav-item"><a class="nav-link active"
-                                            aria-current="page" href="doctor_login.jsp">DOCTOR</a></li>
-                    <li class="nav-item"><a class="nav-link active"
-                                            aria-current="page" href="patient/patientLogin.jsp">PATIENT</a></li>
-                    </c:if>
+                <c:if test="${empty userObj}">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" 
+                           href="http://localhost:8080/Appointment/admin/adminLogin.jsp">DOCTOR</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" 
+                           href="http://localhost:8080/Appointment/doctor/doctor_login.jsp">DOCTOR</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" 
+                           href="http://localhost:8080/Appointment/patient/patientLogin.jsp">PATIENT</a>
+                    </li>
+                </c:if>
 
-                <c:if test="${not empty userObj }">
-                    <li class="nav-item"><a class="nav-link active"
-                                            aria-current="page" href="user_appointment.jsp">APPOINTMENT</a></li>
-
-                    <li class="nav-item"><a class="nav-link active"
-                                            aria-current="page" href="view_appointment.jsp">VIEW
-                            APPOINTMENT</a></li>
-
+                <c:if test="${not empty userObj}">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" 
+                           href="user_appointment.jsp">APPOINTMENT</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" 
+                            href="view_appointment.jsp">VIEW APPOINTMENT</a>
+                    </li>
                     <div class="dropdown">
                         <button class="btn btn-success dropdown-toggle" type="button"
                                 id="dropdownMenuButton1" data-bs-toggle="dropdown"
@@ -36,15 +49,17 @@
                             <i class="fa-solid fa-circle-user"></i> ${userObj.getFullname()}
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            <li><a class="dropdown-item" href="change_password.jsp">Change
-                                    Password</a></li>
-                            <li><a class="dropdown-item" href="patientLogout">Logout</a></li>
+                            <li><a class="dropdown-item" 
+                                   href="http://localhost:8080/Appointment/patient/change_password.jsp">
+                                    Change Password</a></li>
+                            <li><a class="dropdown-item" 
+                                   href="http://localhost:8080/Appointment/patientLogout">
+                                    Logout</a></li>
 
                         </ul>
                     </div>
                 </c:if>
             </ul>
-
         </div>
     </div>
 </nav>

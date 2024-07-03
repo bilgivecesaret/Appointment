@@ -25,7 +25,7 @@ public class PatientLogin extends HttpServlet {
         HttpSession session = request.getSession();
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("my_persistence_unit");
         EntityManager em = emf.createEntityManager();
-
+        String root = request.getContextPath();
         try {
             Query query = em.createQuery("SELECT d FROM Patient d WHERE d.email = :email AND d.password = :password", Patient.class);
             query.setParameter("email", email);
@@ -39,11 +39,11 @@ public class PatientLogin extends HttpServlet {
             }
 
             if (patient != null) {
-                session.setAttribute("userObj", patient);
-                request.getRequestDispatcher("patient/index.jsp").forward(request, response);
+                session.setAttribute("userObj", patient); 
+                response.sendRedirect("http://localhost:8080/Appointment/patient/index.jsp");
             } else {
                 session.setAttribute("errorMsg", "invalid email & password");
-                request.getRequestDispatcher("patient/patientLogin.jsp").forward(request, response);
+                response.sendRedirect("http://localhost:8080/Appointment/patient/patientLogin.jsp");
             }
         } finally {
             em.close();

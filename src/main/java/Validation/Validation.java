@@ -10,7 +10,7 @@ public class Validation {
     }
    
     public static boolean checkPassword(String password) {
-    String passwordRegex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{10,}$";
+    String passwordRegex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$";
         return Pattern.matches(passwordRegex, password);
     }
    

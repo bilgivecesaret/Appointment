@@ -14,11 +14,10 @@ public class PatientLogout extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       
         HttpSession session = request.getSession();
         session.removeAttribute("userObj");
         session.setAttribute("succMsg", "Patient Logout Sucessfully");
-        response.sendRedirect("patient/patientLogin.jsp");
+        response.sendRedirect("http://localhost:8080/Appointment/patient/patientLogin.jsp");
         
     }
 }
