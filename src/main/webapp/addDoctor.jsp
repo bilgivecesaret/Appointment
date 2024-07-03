@@ -5,7 +5,7 @@
 </head>
 <body>
     <h2>Add Doctor</h2>
-    <form action="addDoctorServlet" method="post">
+    <form action="addDoctor" method="post">
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" required><br>
         <label for="password">Password:</label>

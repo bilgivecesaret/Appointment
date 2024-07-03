@@ -6,7 +6,7 @@
 <body>
     <h2>Welcome, Doctor</h2>
     <ul>
-        <li><a href="showAppointmentServlet">Show Appointments</a></li>
+        <li><a href="showAppointments">Show Appointments</a></li>
     </ul>
     <form action="logoutServlet" method="post">
         <input type="submit" value="Logout">
