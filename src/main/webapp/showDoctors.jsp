@@ -19,7 +19,7 @@
                 <td>${doctor.doctorFullName}</td>
                 <td>${doctor.doctorDepartment}</td>
                 <td>
-                    <form action="deleteDoctorServlet" method="post" style="display:inline;">
+                    <form action="deleteDoctor" method="post" style="display:inline;">
                         <input type="hidden" name="doctorId" value="${doctor.doctorId}">
                         <input type="submit" value="Delete">
                     </form>
