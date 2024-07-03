@@ -5,7 +5,7 @@
 </head>
 <body>
     <h2>Update Doctor</h2>
-    <form action="updateDoctorServlet" method="post">
+    <form action="updateDoctor" method="post">
         <input type="hidden" name="doctorId" value="${doctor.doctorId}">
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" value="${doctor.doctorUsername}" required><br>
