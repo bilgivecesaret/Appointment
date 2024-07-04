@@ -30,6 +30,7 @@ public class adminLogin extends HttpServlet {
     
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
@@ -37,10 +38,10 @@ public class adminLogin extends HttpServlet {
         String adminPassword = "123";
 
         if (username.equals(adminUsername) && password.equals(adminPassword)) {
-            HttpSession session = request.getSession();
             session.setAttribute("admin", username);
             response.sendRedirect("http://localhost:8080/Appointment/admin/adminHome.jsp");
         } else {
+            session.setAttribute("errorMsg", "invalid username & password");
             response.sendRedirect("http://localhost:8080/Appointment/notFound.jsp");
         }
     }
