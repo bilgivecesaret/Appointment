@@ -11,9 +11,12 @@
         </style>
     </head>
     <body>
-        <c:if test="${ empty userObj }">
-            <c:redirect url="http://localhost:8080/Appointment/index.jsp"></c:redirect>
-        </c:if>
+        <% 
+            Patient p = (Patient) session.getAttribute("userObj");
+            if(p==null){
+                response.sendRedirect("http://localhost:8080/Appointment/index.jsp");
+            }
+        %>
         <%@include file="navbar.jsp" %>
         <%@include file="../component/doctorCards.jsp" %> 
         <%@include file="../component/footer.jsp" %>

@@ -15,7 +15,7 @@
     </style>
 </head>
 <body>
-    <%@include file="./navbar.jsp"%>
+    <%@include file="navbar.jsp"%>
     <c:if test="${ empty userObj }">
         <c:redirect url="http://localhost:8080/Appointment/patient/patientLogin.jsp"></c:redirect>
     </c:if>

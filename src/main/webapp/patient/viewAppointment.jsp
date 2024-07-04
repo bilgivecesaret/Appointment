@@ -34,9 +34,6 @@
         </style>
     </head>
     <body>
-	<c:if test="${empty userObj }">
-            <c:redirect url="http://localhost:8080/Appointment/patient/patientLogin.jsp"></c:redirect>
-	</c:if>
 	<%@include file="./navbar.jsp"%>
 	<div class="container-fulid backImg p-5">
             <p class="text-center fs-2 text-white"></p>
@@ -59,18 +56,18 @@
                                 <tbody>
                                     <%
                                     EntityManagerFactory emf = Persistence.createEntityManagerFactory("my_persistence_unit");
-                                    EntityManager em = emf.createEntityManager(); 
-                                    Patient patient = (Patient) session.getAttribute("userObj");
+                                    EntityManager em = emf.createEntityManager();                                     
                                     List<Appointment> list = new ArrayList<>();
-                                    Query query = em.createQuery("SELECT c FROM Appointment c WHERE c.patientId = :patientId");
-                                    query.setParameter("patientId", patient.getId());
+                                    Patient pt = (Patient) session.getAttribute("userObj");
+                                    Query query = em.createQuery("SELECT c FROM Appointment c WHERE c.patient_id = :?", Appointment.class);
+                                    query.setParameter(1, pt.getId());
                                     list = query.getResultList();
                                     for (Appointment ap : list) {
-                                        Query query2 = em.createQuery("SELECT c FROM Doctor c WHERE c.doctorId = :doctorId");
-                                        query.setParameter("doctorId", ap.getDoctorId());
+                                        Query query2 = em.createQuery("SELECT c FROM Doctor c WHERE c.id = :?", Doctor.class);
+                                        query2.setParameter(1, ap.getDoctorId());
                                         Doctor d = (Doctor) query.getSingleResult();
-                                        Query query3 = em.createQuery("SELECT c FROM Department c WHERE c.departmentId = :departmentId");
-                                        query3.setParameter("departmentId", d.getDepartmentId());
+                                        Query query3 = em.createQuery("SELECT c FROM Department c WHERE c.id = :?", Department.class);
+                                        query3.setParameter(1, d.getDepartmentId());
                                         Department dp = (Department) query.getSingleResult();
                                     %>
                                     <tr>
