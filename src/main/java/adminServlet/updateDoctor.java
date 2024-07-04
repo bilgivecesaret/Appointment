@@ -30,7 +30,7 @@ public class updateDoctor extends HttpServlet {
             String fullName = request.getParameter("fullName");
             String newDepartment = request.getParameter("department");
 
-            EntityManagerFactory emf = Persistence.createEntityManagerFactory("examplePU");
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("my_persistence_unit");
             EntityManager em = emf.createEntityManager();
 
             em.getTransaction().begin();
