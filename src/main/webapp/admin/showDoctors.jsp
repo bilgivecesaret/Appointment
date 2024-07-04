@@ -1,35 +1,71 @@
+<%@ page import="entity.Doctor"%>
+<%@ page import="entity.Department"%>
+<%@ page import="java.util.List"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page isELIgnored="false"%>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Show Doctors</title>
+    <meta charset="ISO-8859-1">
+    <title>Doctor List</title>
+    <%@include file="../component/allcss.jsp"%>
+    <style type="text/css">
+        .paint-card {
+            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+        }
+        .backImg {
+            background: linear-gradient(rgba(0, 0, 0, .4), rgba(0, 0, 0, .4)),
+            url("img/hosp.jpg");
+            height: 30vh;
+            width: 100%;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+    </style>
 </head>
 <body>
-    <h2>Doctors</h2>
-    <table border="1">
-        <tr>
-            <th>Doctor ID</th>
-            <th>Username</th>
-            <th>Full Name</th>
-            <th>Department</th>
-            <th>Actions</th>
-        </tr>
-        <c:forEach var="doctor" items="${doctors}">
-            <tr>
-                <td>${doctor.doctorId}</td>
-                <td>${doctor.doctorFullName}</td>
-                <td>${doctor.doctorDepartment}</td>
-                <td>
-                    <form action="http://localhost:8080/Appointment/admin/deleteDoctor" method="post" style="display:inline;">
-                        <input type="hidden" name="doctorId" value="${doctor.doctorId}">
-                        <input type="submit" value="Delete">
-                    </form>
-                    <form action="http://localhost:8080/Appointment/admin/updateDoctor" method="get" style="display:inline;">
-                        <input type="hidden" name="doctorId" value="${doctor.doctorId}">
-                        <input type="submit" value="Update">
-                    </form>
-                </td>
-            </tr>
-        </c:forEach>
-    </table>
+    <%@include file="./navbar.jsp"%>
+    <div class="container-fluid backImg p-5">
+        <p class="text-center fs-2 text-white">Doctor List</p>
+    </div>
+    <div class="container p-3">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="card paint-card">
+                    <div class="card-body">
+                        <p class="fs-4 fw-bold text-center text-success">Doctor List</p>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Doctor ID</th>
+                                    <th scope="col">Username</th>
+                                    <th scope="col">Full Name</th>
+                                    <th scope="col">Department</th>
+                                    <th scope="col">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach var="doctor" items="${doctors}">
+                                    <tr>
+                                        <td>${doctor.doctorId}</td>
+                                        <td>${doctor.username}</td>
+                                        <td>${doctor.fullName}</td>
+                                        <td>${doctor.department.name}</td>
+                                        <td>
+                                            <a href="updateDoctor.jsp?doctorId=${doctor.doctorId}" class="btn btn-primary">Edit</a>
+                                            <a href="deleteDoctor?doctorId=${doctor.doctorId}" class="btn btn-danger">Delete</a>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 p-3">
+                <img alt="" src="../img/doct9.jpg" height="200px" width="200px">
+            </div>
+        </div>
+    </div>
 </body>
 </html>
