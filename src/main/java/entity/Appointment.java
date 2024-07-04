@@ -12,6 +12,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -31,9 +33,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Appointment.findAll", query = "SELECT a FROM Appointment a"),
     @NamedQuery(name = "Appointment.findById", query = "SELECT a FROM Appointment a WHERE a.id = :id"),
     @NamedQuery(name = "Appointment.findByAppointDate", query = "SELECT a FROM Appointment a WHERE a.appointDate = :appointDate"),
-    @NamedQuery(name = "Appointment.findByAppointmentTime", query = "SELECT a FROM Appointment a WHERE a.appointmentTime = :appointmentTime"),
-    @NamedQuery(name = "Appointment.findByPatientId", query = "SELECT a FROM Appointment a WHERE a.patientId = :patientId"),
-    @NamedQuery(name = "Appointment.findByDoctorId", query = "SELECT a FROM Appointment a WHERE a.doctorId = :doctorId")})
+    @NamedQuery(name = "Appointment.findByAppointmentTime", query = "SELECT a FROM Appointment a WHERE a.appointmentTime = :appointmentTime")})
 public class Appointment implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -52,14 +52,12 @@ public class Appointment implements Serializable {
     @Column(name = "appointment _time")
     @Temporal(TemporalType.TIME)
     private Date appointmentTime;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "patient_id")
-    private int patientId;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "doctor_id")
-    private int doctorId;
+    @JoinColumn(name = "doctor_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Doctor doctorId;
+    @JoinColumn(name = "patient_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Patient patientId;
 
     public Appointment() {
     }
@@ -68,12 +66,10 @@ public class Appointment implements Serializable {
         this.id = id;
     }
 
-    public Appointment(Integer id, Date appointDate, Date appointmentTime, int patientId, int doctorId) {
+    public Appointment(Integer id, Date appointDate, Date appointmentTime) {
         this.id = id;
         this.appointDate = appointDate;
         this.appointmentTime = appointmentTime;
-        this.patientId = patientId;
-        this.doctorId = doctorId;
     }
 
     public Integer getId() {
@@ -100,20 +96,20 @@ public class Appointment implements Serializable {
         this.appointmentTime = appointmentTime;
     }
 
-    public int getPatientId() {
-        return patientId;
-    }
-
-    public void setPatientId(int patientId) {
-        this.patientId = patientId;
-    }
-
-    public int getDoctorId() {
+    public Doctor getDoctorId() {
         return doctorId;
     }
 
-    public void setDoctorId(int doctorId) {
+    public void setDoctorId(Doctor doctorId) {
         this.doctorId = doctorId;
+    }
+
+    public Patient getPatientId() {
+        return patientId;
+    }
+
+    public void setPatientId(Patient patientId) {
+        this.patientId = patientId;
     }
 
     @Override
