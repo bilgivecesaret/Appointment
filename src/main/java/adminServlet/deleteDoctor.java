@@ -41,6 +41,6 @@ public class deleteDoctor extends HttpServlet {
         em.close();
         emf.close();
 
-        response.sendRedirect("http://localhost:8080/Appointment/showDoctors.jsp");
+        response.sendRedirect("http://localhost:8080/Appointment/admin/showDoctors.jsp");
     }
 }
