@@ -36,7 +36,7 @@ public class showAppointments extends HttpServlet {
             return;
         }
 
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("examplePU");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("my_persistence_unit");
         EntityManager em = emf.createEntityManager();
 
         try {
