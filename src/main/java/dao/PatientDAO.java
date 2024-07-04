@@ -1,4 +1,3 @@
-
 package dao;
 
 import entity.Patient;
@@ -10,6 +9,7 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 public class PatientDAO {
+
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("my_persistence_unit");
     EntityManager em = emf.createEntityManager();
 
@@ -18,7 +18,6 @@ public class PatientDAO {
         em.getTransaction().begin();
         em.persist(patient);
         em.getTransaction().commit();
-        //JPAUtil.shutdown();
     }
 
     // edit patient
@@ -26,14 +25,12 @@ public class PatientDAO {
         em.getTransaction().begin();
         em.merge(patient);
         em.getTransaction().commit();
-        /// JPAUtil.shutdown();
     }
 
     // find patient
     public Patient find(Integer id) {
         Patient c = new Patient();
         c = em.find(Patient.class, id);
-        // JPAUtil.shutdown();
         return c;
     }
 
@@ -52,5 +49,10 @@ public class PatientDAO {
         Query q = em.createQuery("SELECT c FROM Patient c");
         listaPatients = q.getResultList();
         return listaPatients;
+    }   
+
+    public void close() {
+        em.close();
+        emf.close();
     }
 }

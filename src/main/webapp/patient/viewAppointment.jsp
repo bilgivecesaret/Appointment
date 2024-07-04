@@ -9,13 +9,13 @@
 <%@page import="entity.Appointment"%>
 <%@page import="java.util.List"%>
 <%@page import="dao.AppointmentDAO"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page isELIgnored="false"%>
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="ISO-8859-1">
+        <meta charset="UTF-8">
         <title>Your All Appointments</title>
         <%@include file="../component/allcss.jsp"%>
         <style type="text/css">
@@ -55,27 +55,16 @@
                                 </thead>
                                 <tbody>
                                     <%
-                                    EntityManagerFactory emf = Persistence.createEntityManagerFactory("my_persistence_unit");
-                                    EntityManager em = emf.createEntityManager();                                     
-                                    List<Appointment> list = new ArrayList<>();
                                     Patient pt = (Patient) session.getAttribute("userObj");
-                                    int id = 1;
-                                    Query query = em.createQuery("SELECT c FROM Appointment c WHERE c.patientId = "+id, Appointment.class);
-                                    query.setParameter(id, pt.getId());
-                                    list = query.getResultList();
-                                    for (Appointment ap : list) {
-                                        Query query2 = em.createQuery("SELECT c FROM Doctor c WHERE c.id = "+id, Doctor.class);
-                                        query2.setParameter(id, ap.getDoctorId());
-                                        Doctor d = (Doctor) query.getSingleResult();
-                                        Query query3 = em.createQuery("SELECT c FROM Department c WHERE c.id = "+id, Department.class);
-                                        query3.setParameter(id, d.getDepartmentId());
-                                        Department dp = (Department) query.getSingleResult();
+                                    List<List<Object>> list = (List) session.getAttribute("getAppointments");
+                                    for (List<Object> ap : list) {
+                                        
                                     %>
                                     <tr>
-                                        <th><%=ap.getAppointDate()%></th>
-                                        <td><%=ap.getAppointmentTime()%></td>
-                                        <td><%=dp.getName()%></td>
-                                        <td><%=d.getFullname()%></td>
+                                        <th><%=ap.get(0)%></th>
+                                        <td><%=ap.get(1)%></td>
+                                        <td><%=ap.get(2)%></td>
+                                        <td><%=ap.get(3)%></td>
                                     </tr>
                                     <%
                                     }

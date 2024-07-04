@@ -2,12 +2,15 @@
 package dao;
 
 import entity.Appointment;
+import entity.Doctor;
+import entity.Patient;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 public class AppointmentDAO {
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("my_persistence_unit");
@@ -17,8 +20,7 @@ public class AppointmentDAO {
     public void save(Appointment appointment) {
         em.getTransaction().begin();
         em.persist(appointment);
-        em.getTransaction().commit();
-        //JPAUtil.shutdown();
+        em.getTransaction().commit();        
     }
 
     // edit appointment
@@ -26,14 +28,26 @@ public class AppointmentDAO {
         em.getTransaction().begin();
         em.merge(appointment);
         em.getTransaction().commit();
-        /// JPAUtil.shutdown();
     }
 
     // find appointment
-    public Appointment find(Integer id) {
+    public Appointment findAppoinment(Integer id) {
         Appointment c = new Appointment();
         c = em.find(Appointment.class, id);
-        // JPAUtil.shutdown();
+        return c;
+    }
+    
+    // find Doctor
+    public Doctor findDoctor(Integer id) {
+        Doctor c = new Doctor();
+        c = em.find(Doctor.class, id);
+        return c;
+    }
+    
+    // find Patient
+    public Patient findPatient(Integer id) {
+        Patient c = new Patient();
+        c = em.find(Patient.class, id);
         return c;
     }
 
@@ -48,9 +62,22 @@ public class AppointmentDAO {
 
     // get all appointments
     public List<Appointment> findAllAppointments() {
-        List<Appointment> listaAppointments = new ArrayList<>();
+        List<Appointment> listAppointments = new ArrayList<>();
         Query q = em.createQuery("SELECT c FROM Appointment c");
-        listaAppointments = q.getResultList();
-        return listaAppointments;
+        listAppointments = q.getResultList();
+        return listAppointments;
+    }
+    
+    // Find all appointments for a specific patient
+    public List<Appointment> findAllAppointmentsByPatient(Integer patientId) {
+        TypedQuery<Appointment> query = em.createQuery(
+                "SELECT a FROM Appointment a WHERE a.patientId = :patientId", Appointment.class);
+        query.setParameter("patientId", patientId);
+        return query.getResultList();
+    }
+    
+    public void close(){
+        em.close();
+        emf.close();
     }
 }

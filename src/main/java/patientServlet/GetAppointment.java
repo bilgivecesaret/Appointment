@@ -1,7 +1,10 @@
 
 package patientServlet;
 
+import dao.AppointmentDAO;
+import dao.DoctorDAO;
 import entity.Appointment;
+import entity.Doctor;
 import entity.Patient;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,23 +20,41 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet(urlPatterns = {"/getAppointment"})
+@WebServlet(name = "GetAppointment",urlPatterns = {"/getAppointment"})
 public class GetAppointment extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        HttpSession session = request.getSession(false);
+        Patient patient = (Patient) session.getAttribute("userObj");
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("my_persistence_unit");
-        EntityManager em = emf.createEntityManager();                                     
-        List<Appointment> list = new ArrayList<>();
-        HttpSession session = request.getSession();
-        Patient pt = (Patient) session.getAttribute("userObj");
-        Query query = em.createQuery("SELECT c FROM Appointment c WHERE c.id = :id1", Appointment.class);
-        query.setParameter("id1", pt.getId());
-        list = query.getResultList();
-        session.setAttribute("list", list);
-        response.sendRedirect("http://localhost:8080/Appointment/patient/viewAppointment.jsp");
+        EntityManager em = emf.createEntityManager();
+        if (patient == null) {
+            response.sendRedirect("http://localhost:8080/Appointment/patient/patientLogin.jsp");
+            return;
+        }        
+        Appointment ap = new Appointment();
+        List<Appointment> listAppointments = new ArrayList<>();
+        Query q = em.createQuery("SELECT c FROM Appointment c");
+        listAppointments = q.getResultList();
+        
+        /*
+        DoctorDAO docDao = new DoctorDAO();
+        List<Appointment> appList = appDao.findAllAppointmentsByPatient(patient.getId());
+        List<List<Object>> appointments = new ArrayList<>();
+        for(Appointment ap: appList){            
+            List<Object> a = new ArrayList<>();
+            a.add(ap.getAppointDate());
+            a.add(ap.getAppointmentTime());
+            a.add(docDao.findDepartment(ap.getDoctorId()));
+            a.add(appDao.findDoctor(ap.getDoctorId()));
+            appointments.add(a);
+        }
+        docDao.close();
+        appDao.close();
+        session.setAttribute("getAppointments", appointments);
+*/
     }
 
 }

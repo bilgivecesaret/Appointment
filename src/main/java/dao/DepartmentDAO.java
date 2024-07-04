@@ -18,7 +18,6 @@ public class DepartmentDAO {
         em.getTransaction().begin();
         em.persist(department);
         em.getTransaction().commit();
-        //JPAUtil.shutdown();
     }
 
     // edit department
@@ -26,14 +25,12 @@ public class DepartmentDAO {
         em.getTransaction().begin();
         em.merge(department);
         em.getTransaction().commit();
-        /// JPAUtil.shutdown();
     }
 
     // find department
     public Department find(Integer id) {
         Department c = new Department();
         c = em.find(Department.class, id);
-        // JPAUtil.shutdown();
         return c;
     }
 
@@ -52,5 +49,10 @@ public class DepartmentDAO {
         Query q = em.createQuery("SELECT c FROM Department c");
         listaDepartments = q.getResultList();
         return listaDepartments;
+    }
+    
+    public void close(){
+        em.close();
+        emf.close();
     }
 }

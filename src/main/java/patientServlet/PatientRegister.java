@@ -16,26 +16,24 @@ public class PatientRegister extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-			String fullName = request.getParameter("fullname");
-			String email = request.getParameter("email");
-			String password = request.getParameter("password");
-			HttpSession session = request.getSession();
+                String fullName = request.getParameter("fullname");
+                String email = request.getParameter("email");
+                String password = request.getParameter("password");
+                HttpSession session = request.getSession();
 
-			boolean f = true;
+                boolean f = true;
 
-			if (f) {              
-                            session.setAttribute("sucMsg", "Register Sucessfully");
-                            response.sendRedirect("signup.jsp");
+                if (f) {              
+                    session.setAttribute("sucMsg", "Register Sucessfully");
+                    response.sendRedirect("signup.jsp");
 
-			} else {
-                            session.setAttribute("errorMsg", "Something wrong on server");
-                            response.sendRedirect("signup.jsp");
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-        
+                } else {
+                    session.setAttribute("errorMsg", "Something wrong on server");
+                    response.sendRedirect("signup.jsp");
+                }
+        } catch (Exception e) {
+                e.printStackTrace();
+        }        
     }
 
 }

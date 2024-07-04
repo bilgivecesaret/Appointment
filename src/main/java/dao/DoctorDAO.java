@@ -1,5 +1,6 @@
 package dao;
 
+import entity.Department;
 import entity.Doctor;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,6 @@ public class DoctorDAO {
         em.getTransaction().begin();
         em.persist(doctor);
         em.getTransaction().commit();
-        //JPAUtil.shutdown();
     }
 
     // edit doctor
@@ -25,14 +25,12 @@ public class DoctorDAO {
         em.getTransaction().begin();
         em.merge(doctor);
         em.getTransaction().commit();
-        /// JPAUtil.shutdown();
     }
 
     // find doctor
     public Doctor find(Integer id) {
         Doctor c = new Doctor();
         c = em.find(Doctor.class, id);
-        // JPAUtil.shutdown();
         return c;
     }
 
@@ -51,5 +49,16 @@ public class DoctorDAO {
         Query q = em.createQuery("SELECT c FROM Doctor c");
         listaDoctors = q.getResultList();
         return listaDoctors;
+    }
+    
+    public Department findDepartment(Integer id) {
+        Department c = new Department();
+        c = em.find(Department.class, id);
+        return c;
+    }
+    
+    public void close(){
+        em.close();
+        emf.close();
     }
 }
