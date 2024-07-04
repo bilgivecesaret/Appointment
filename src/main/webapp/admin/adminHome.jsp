@@ -12,7 +12,7 @@
         <li><a href="http://localhost:8080/Appointment/admin/updateDoctor">Update Doctor</a></li>
         <li><a href="http://localhost:8080/Appointment/admin/deleteDoctor">Delete Doctor</a></li>
     </ul>
-    <form action="logoutServlet" method="post">
+    <form action="http://localhost:8080/Appointment/adminLogout" method="post">
         <input type="submit" value="Logout">
     </form>
 </body>
