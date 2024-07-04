@@ -45,7 +45,7 @@ public class showAppointments extends HttpServlet {
 
             List<Appointment> appointments = query.getResultList();
             request.setAttribute("appointments", appointments);
-            request.getRequestDispatcher("showAppointments.jsp").forward(request, response);
+            response.sendRedirect("http://localhost:8080/Appointment/showAppointments.jsp");
         } finally {
             em.close();
             emf.close();
