@@ -49,7 +49,7 @@ public class Appointment implements Serializable {
     private Date appointDate;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "appointment _time")
+    @Column(name = "appointment_time")
     @Temporal(TemporalType.TIME)
     private Date appointmentTime;
     @JoinColumn(name = "doctor_id", referencedColumnName = "id")

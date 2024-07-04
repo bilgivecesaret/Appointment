@@ -1,3 +1,5 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
 <%@page import="entity.Department"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="javax.persistence.Query"%>
@@ -8,7 +10,6 @@
 <%@page import="entity.Doctor"%>
 <%@page import="entity.Appointment"%>
 <%@page import="java.util.List"%>
-<%@page import="dao.AppointmentDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page isELIgnored="false"%>
@@ -55,19 +56,20 @@
                                 </thead>
                                 <tbody>
                                     <%
-                                    Patient pt = (Patient) session.getAttribute("userObj");
-                                    List<List<Object>> list = (List) session.getAttribute("getAppointments");
-                                    for (List<Object> ap : list) {
-                                        
+                                    List<Appointment> list = (List) session.getAttribute("getAppointments");                                    
+                                    SimpleDateFormat dateFormatter = new SimpleDateFormat("dd.MM.yyyy");
+                                    SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm");
+                                    if(list != null){
+                                        for (Appointment ap : list) {                                        
                                     %>
                                     <tr>
-                                        <th><%=ap.get(0)%></th>
-                                        <td><%=ap.get(1)%></td>
-                                        <td><%=ap.get(2)%></td>
-                                        <td><%=ap.get(3)%></td>
+                                        <th><%=dateFormatter.format(ap.getAppointDate())%></th>
+                                        <td><%=timeFormatter.format(ap.getAppointmentTime())%></td>
+                                        <td><%=ap.getDoctorId().getDepartmentId().getName()%></td>
+                                        <td><%=ap.getDoctorId().getFullname()%></td>
                                     </tr>
                                     <%
-                                    }
+                                    }}
                                     %>
                                 </tbody>
                             </table>

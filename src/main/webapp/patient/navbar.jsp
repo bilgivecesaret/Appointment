@@ -35,7 +35,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" 
-                        href="http://localhost:8080/Appointment/patient/viewAppointment.jsp">VIEW APPOINTMENT</a>
+                        href="http://localhost:8080/Appointment/getAppointment">VIEW APPOINTMENT</a>
                 </li>
             <%}%>
                 <div class="dropdown">

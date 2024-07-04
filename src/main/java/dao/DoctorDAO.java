@@ -57,6 +57,15 @@ public class DoctorDAO {
         return c;
     }
     
+    public List<Doctor> findDoctorsByDepartmentId(int departmentId) {
+        List<Doctor> doctors = new ArrayList<>();
+        Query q = em.createQuery("SELECT * FROM Doctor WHERE department_id = ?");
+        q.setParameter(1, departmentId);
+        doctors = q.getResultList();
+        return doctors;
+    }
+
+    
     public void close(){
         em.close();
         emf.close();
