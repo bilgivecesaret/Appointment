@@ -28,7 +28,7 @@
                             <p class="text-center text-danger fs-5">${errorMsg}</p>
                             <c:remove var="errorMsg" scope="session" />
                         </c:if>
-                        <form action="http://localhost:8080/Appointment/admin/adminLogin" method="post">
+                        <form action="http://localhost:8080/Appointment/adminLogin" method="post">
                             <div class="mb-3">
                                 <label class="form-label">Username</label>
                                 <input required name="username" type="text" class="form-control">
