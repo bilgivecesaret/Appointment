@@ -34,7 +34,7 @@ public class showPatient extends HttpServlet {
         List<?> patients = query.getResultList();
 
         request.setAttribute("patients", patients);
-        response.sendRedirect("http://localhost:8080/Appointment/showPatients.jsp");
+        response.sendRedirect("http://localhost:8080/Appointment/admin/showPatients.jsp");
 
         em.close();
         emf.close();
