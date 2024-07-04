@@ -30,6 +30,7 @@ public class doctorLogin extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
@@ -49,10 +50,10 @@ public class doctorLogin extends HttpServlet {
             }
 
             if (doctor != null) {
-                HttpSession session = request.getSession();
                 session.setAttribute("doctor", doctor);
                 response.sendRedirect("http://localhost:8080/Appointment/doctor/doctorHome.jsp");
             } else {
+                session.setAttribute("errorMsg", "invalid username & password");
                 response.sendRedirect("http://localhost:8080/Appointment/notFound.jsp");
             }
         } finally {
