@@ -26,7 +26,7 @@ public class addDoctor extends HttpServlet {
         String name = request.getParameter("name");
         String department = request.getParameter("department");
 
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("examplePU");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("my_persistence_unit");
         EntityManager em = emf.createEntityManager();
 
         em.getTransaction().begin();
