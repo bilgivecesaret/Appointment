@@ -36,7 +36,7 @@ public class showAppointments extends HttpServlet {
             return;
         }
 
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("examplePU");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("my_persistence_unit");
         EntityManager em = emf.createEntityManager();
 
         try {
@@ -45,7 +45,7 @@ public class showAppointments extends HttpServlet {
 
             List<Appointment> appointments = query.getResultList();
             request.setAttribute("appointments", appointments);
-            request.getRequestDispatcher("showAppointments.jsp").forward(request, response);
+            response.sendRedirect("http://localhost:8080/Appointment/showAppointments.jsp");
         } finally {
             em.close();
             emf.close();

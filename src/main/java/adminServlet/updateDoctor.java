@@ -30,7 +30,7 @@ public class updateDoctor extends HttpServlet {
             String fullName = request.getParameter("fullName");
             String newDepartment = request.getParameter("department");
 
-            EntityManagerFactory emf = Persistence.createEntityManagerFactory("examplePU");
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("my_persistence_unit");
             EntityManager em = emf.createEntityManager();
 
             em.getTransaction().begin();
@@ -48,10 +48,10 @@ public class updateDoctor extends HttpServlet {
             em.close();
             emf.close();
 
-            request.getRequestDispatcher("showDoctors").forward(request, response);
+            response.sendRedirect("http://localhost:8080/Appointment/showDoctors.jsp");
         } catch (Exception e) {
             e.printStackTrace();
-            request.getRequestDispatcher("errorPage.jsp").forward(request, response);
+            response.sendRedirect("http://localhost:8080/Appointment/notFound.jsp");
         }
     }
 }

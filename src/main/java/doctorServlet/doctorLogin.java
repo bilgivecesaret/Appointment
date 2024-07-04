@@ -51,9 +51,9 @@ public class doctorLogin extends HttpServlet {
             if (doctor != null) {
                 HttpSession session = request.getSession();
                 session.setAttribute("doctor", doctor);
-                request.getRequestDispatcher("doctorHome.jsp").forward(request, response);
+                response.sendRedirect("http://localhost:8080/Appointment/doctorHome.jsp");
             } else {
-                request.getRequestDispatcher("loginError.jsp").forward(request, response);
+                response.sendRedirect("http://localhost:8080/Appointment/notFound.jsp");
             }
         } finally {
             em.close();

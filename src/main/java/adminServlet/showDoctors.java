@@ -28,14 +28,14 @@ public class showDoctors extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("examplePU");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("my_persistence_unit");
         EntityManager em = emf.createEntityManager();
         
         Query query = em.createQuery("SELECT d FROM Doctor d");
         List<?> doctors = query.getResultList();
         
         request.setAttribute("doctors", doctors);
-        request.getRequestDispatcher("showDoctors.jsp").forward(request, response);
+        response.sendRedirect("http://localhost:8080/Appointment/showDoctors.jsp");
         
         em.close();
         emf.close();

@@ -19,11 +19,11 @@
                 <td>${doctor.doctorFullName}</td>
                 <td>${doctor.doctorDepartment}</td>
                 <td>
-                    <form action="deleteDoctor" method="post" style="display:inline;">
+                    <form action="http://localhost:8080/Appointment/deleteDoctor" method="post" style="display:inline;">
                         <input type="hidden" name="doctorId" value="${doctor.doctorId}">
                         <input type="submit" value="Delete">
                     </form>
-                    <form action="updateDoctor.jsp" method="get" style="display:inline;">
+                    <form action="http://localhost:8080/Appointment/updateDoctor" method="get" style="display:inline;">
                         <input type="hidden" name="doctorId" value="${doctor.doctorId}">
                         <input type="submit" value="Update">
                     </form>

@@ -28,7 +28,7 @@ public class deleteDoctor extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int doctorId = Integer.parseInt(request.getParameter("doctorId"));
 
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("examplePU");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("my_persistence_unit");
         EntityManager em = emf.createEntityManager();
 
         em.getTransaction().begin();
@@ -41,6 +41,6 @@ public class deleteDoctor extends HttpServlet {
         em.close();
         emf.close();
 
-        request.getRequestDispatcher("showDoctors").forward(request, response);
+        response.sendRedirect("http://localhost:8080/Appointment/showDoctors.jsp");
     }
 }

@@ -17,7 +17,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author kuzeyerturk
  */
-@WebServlet(name = "adminLoginServlet", urlPatterns = {"/adminLoginServlet"})
+@WebServlet(name = "adminLogin", urlPatterns = {"/adminLogin"})
 public class adminLogin extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
@@ -39,9 +39,9 @@ public class adminLogin extends HttpServlet {
         if (username.equals(adminUsername) && password.equals(adminPassword)) {
             HttpSession session = request.getSession();
             session.setAttribute("admin", username);
-            request.getRequestDispatcher("adminHome.jsp").forward(request, response);
+            response.sendRedirect("http://localhost:8080/Appointment/adminHome.jsp");
         } else {
-            request.getRequestDispatcher("notFound.jsp").forward(request, response);
+            response.sendRedirect("http://localhost:8080/Appointment/notFound.jsp");
         }
     }
 }
