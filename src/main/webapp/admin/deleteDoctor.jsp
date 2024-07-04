@@ -22,7 +22,7 @@
 
                 for (Doctor doctor : doctors) {
             %>
-                <option value="<%= doctor.getDoctorId() %>"><%= doctor.getDoctorFullName() %> - <%= doctor.getDoctorDepartment() %></option>
+                <option value="<%= doctor.getId() %>"><%= doctor.getFullname() %> - <%= doctor.getDepartmentId() %></option>
             <%
                 }
             %>
