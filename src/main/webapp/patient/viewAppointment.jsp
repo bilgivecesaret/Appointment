@@ -60,7 +60,7 @@
                                     List<Appointment> list = new ArrayList<>();
                                     Patient pt = (Patient) session.getAttribute("userObj");
                                     int id = 1;
-                                    Query query = em.createQuery("SELECT c FROM Appointment c WHERE c.patient_id = "+id, Appointment.class);
+                                    Query query = em.createQuery("SELECT c FROM Appointment c WHERE c.patientId = "+id, Appointment.class);
                                     query.setParameter(id, pt.getId());
                                     list = query.getResultList();
                                     for (Appointment ap : list) {
