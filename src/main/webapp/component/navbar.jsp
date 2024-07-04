@@ -14,12 +14,12 @@
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" 
-                       href="http://localhost:8080/Appointment/admin/admin_login.jsp">
+                       href="http://localhost:8080/Appointment/admin/adminLogin.jsp">
                         <i class="fas fa-sign-in-alt"></i>ADMIN</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" 
-                       href="http://localhost:8080/Appointment/doctor/doctor_login.jsp">DOCTOR</a>
+                       href="http://localhost:8080/Appointment/doctor/doctorLogin.jsp">DOCTOR</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" 
