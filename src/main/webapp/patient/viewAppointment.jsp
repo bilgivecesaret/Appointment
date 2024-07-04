@@ -59,15 +59,16 @@
                                     EntityManager em = emf.createEntityManager();                                     
                                     List<Appointment> list = new ArrayList<>();
                                     Patient pt = (Patient) session.getAttribute("userObj");
-                                    Query query = em.createQuery("SELECT c FROM Appointment c WHERE c.patient_id = :?", Appointment.class);
-                                    query.setParameter(1, pt.getId());
+                                    int id = 1;
+                                    Query query = em.createQuery("SELECT c FROM Appointment c WHERE c.patient_id = "+id, Appointment.class);
+                                    query.setParameter(id, pt.getId());
                                     list = query.getResultList();
                                     for (Appointment ap : list) {
-                                        Query query2 = em.createQuery("SELECT c FROM Doctor c WHERE c.id = :?", Doctor.class);
-                                        query2.setParameter(1, ap.getDoctorId());
+                                        Query query2 = em.createQuery("SELECT c FROM Doctor c WHERE c.id = "+id, Doctor.class);
+                                        query2.setParameter(id, ap.getDoctorId());
                                         Doctor d = (Doctor) query.getSingleResult();
-                                        Query query3 = em.createQuery("SELECT c FROM Department c WHERE c.id = :?", Department.class);
-                                        query3.setParameter(1, d.getDepartmentId());
+                                        Query query3 = em.createQuery("SELECT c FROM Department c WHERE c.id = "+id, Department.class);
+                                        query3.setParameter(id, d.getDepartmentId());
                                         Department dp = (Department) query.getSingleResult();
                                     %>
                                     <tr>
