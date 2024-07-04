@@ -10,7 +10,7 @@
 </head>
 <body>
     <h2>Delete Doctor</h2>
-    <form action="http://localhost:8080/Appointment/admin/deleteDoctor" method="post">
+    <form action="http://localhost:8080/Appointment/deleteDoctor" method="post">
         <label for="doctorId">Select Doctor:</label>
         <select id="doctorId" name="doctorId" required>
             <%
