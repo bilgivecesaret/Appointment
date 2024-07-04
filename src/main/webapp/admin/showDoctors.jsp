@@ -47,13 +47,13 @@
                             <tbody>
                                 <c:forEach var="doctor" items="${doctors}">
                                     <tr>
-                                        <td>${doctor.doctorId}</td>
+                                        <td>${doctor.id}</td>
                                         <td>${doctor.username}</td>
                                         <td>${doctor.fullName}</td>
                                         <td>${doctor.department.name}</td>
                                         <td>
-                                            <a href="updateDoctor.jsp?doctorId=${doctor.doctorId}" class="btn btn-primary">Edit</a>
-                                            <a href="deleteDoctor?doctorId=${doctor.doctorId}" class="btn btn-danger">Delete</a>
+                                            <a href="updateDoctor.jsp?id=${doctor.id}" class="btn btn-primary">Edit</a>
+                                            <a href="deleteDoctor?id=${doctor.id}" class="btn btn-danger">Delete</a>
                                         </td>
                                     </tr>
                                 </c:forEach>
