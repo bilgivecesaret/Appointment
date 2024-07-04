@@ -34,14 +34,6 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" 
-                       href="http://localhost:8080/Appointment/admin/deleteDoctor.jsp">DELETE DOCTOR</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" 
-                       href="http://localhost:8080/Appointment/admin/updateDoctor.jsp">UPDATE DOCTOR</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" 
                        href="http://localhost:8080/Appointment/admin/showDoctors.jsp">SHOW DOCTORS</a>
                 </li>
                 <li class="nav-item">
