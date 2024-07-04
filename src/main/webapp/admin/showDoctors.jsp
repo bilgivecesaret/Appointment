@@ -50,7 +50,7 @@
                                         <td>${doctor.id}</td>
                                         <td>${doctor.username}</td>
                                         <td>${doctor.fullName}</td>
-                                        <td>${doctor.department.id}</td>
+                                        <td>${doctor.departmentId}</td>
                                         <td>
                                             <a href="updateDoctor.jsp?id=${doctor.id}" class="btn btn-primary">Edit</a>
                                             <a href="deleteDoctor?id=${doctor.id}" class="btn btn-danger">Delete</a>
