@@ -22,7 +22,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" 
-                       href="http://localhost:8080/Appointment/doctor/doctor_login.jsp">DOCTOR</a>
+                       href="http://localhost:8080/Appointment/doctor/doctorLogin.jsp">DOCTOR</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" 
