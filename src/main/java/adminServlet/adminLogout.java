@@ -16,7 +16,7 @@ public class adminLogout extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         session.removeAttribute("admin");
-        response.sendRedirect("http://localhost:8080/Appointment/adminLogin.jsp");
+        response.sendRedirect("http://localhost:8080/Appointment/admin/adminLogin.jsp");
         
     }
 }
