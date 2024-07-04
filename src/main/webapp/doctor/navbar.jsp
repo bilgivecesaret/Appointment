@@ -13,8 +13,8 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
             <% 
-                Doctor doctor = (Doctor) session.getAttribute("doctor");
-                if(doctor==null){
+                Doctor dr = (Doctor) session.getAttribute("doctor");
+                if(dr==null){
             %>
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" 
