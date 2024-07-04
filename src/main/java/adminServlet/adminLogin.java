@@ -39,7 +39,7 @@ public class adminLogin extends HttpServlet {
 
         if (username.equals(adminUsername) && password.equals(adminPassword)) {
             session.setAttribute("admin", username);
-            response.sendRedirect("http://localhost:8080/Appointment/admin/adminHome.jsp");
+            response.sendRedirect("http://localhost:8080/Appointment/admin/index.jsp");
         } else {
             session.setAttribute("errorMsg", "invalid username & password");
             response.sendRedirect("http://localhost:8080/Appointment/notFound.jsp");

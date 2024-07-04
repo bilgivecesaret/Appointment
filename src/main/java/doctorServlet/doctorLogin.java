@@ -38,7 +38,7 @@ public class doctorLogin extends HttpServlet {
         EntityManager em = emf.createEntityManager();
 
         try {
-            Query query = em.createQuery("SELECT d FROM Doctor d WHERE d.doctorUsername = :username AND d.doctorPassword = :password", Doctor.class);
+            Query query = em.createQuery("SELECT d FROM Doctor d WHERE d.username = :username AND d.password = :password", Doctor.class);
             query.setParameter("username", username);
             query.setParameter("password", password);
 
@@ -51,7 +51,7 @@ public class doctorLogin extends HttpServlet {
 
             if (doctor != null) {
                 session.setAttribute("doctor", doctor);
-                response.sendRedirect("http://localhost:8080/Appointment/doctor/doctorHome.jsp");
+                response.sendRedirect("http://localhost:8080/Appointment/doctor/index.jsp");
             } else {
                 session.setAttribute("errorMsg", "invalid username & password");
                 response.sendRedirect("http://localhost:8080/Appointment/notFound.jsp");
