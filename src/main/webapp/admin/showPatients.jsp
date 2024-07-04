@@ -39,16 +39,20 @@
                                     <th scope="col">Patient ID</th>
                                     <th scope="col">Full Name</th>
                                     <th scope="col">TCKNO</th>
-                                    <th scope="col">Birthday</th>
+                                    <th scope="col">Gender</th>
+                                    <th scope="col">Phone</th>
+                                    <th scope="col">Email</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <c:forEach var="patient" items="${patients}">
                                     <tr>
-                                        <td>${patient.patientId}</td>
-                                        <td>${patient.patientFullName}</td>
-                                        <td>${patient.patientTCKNO}</td>
-                                        <td>${patient.patientBirthday}</td>
+                                        <td>${patient.id}</td>
+                                        <td>${patient.fullname}</td>
+                                        <td>${patient.tc}</td>
+                                        <td>${patient.gender}</td>
+                                        <td>${patient.phone}</td>
+                                        <td>${patient.email}</td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
