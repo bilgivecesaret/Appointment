@@ -41,7 +41,7 @@ public class addDoctor extends HttpServlet {
         em.close();
         emf.close();
 
-        request.getRequestDispatcher("showDoctors").forward(request, response);
+        response.sendRedirect("http://localhost:8080/Appointment/showDoctors.jsp");
     }
 }
 
