@@ -14,7 +14,7 @@
         <label for="fullName">Full Name:</label>
         <input type="text" id="fullName" name="fullName" value="${doctor.fullname}" required><br>
         <label for="department">Department:</label>
-        <input type="text" id="department" name="department" value="${doctor.department.id}" required><br>
+        <input type="text" id="department" name="department" value="${doctor.departmentId}" required><br>
         <input type="submit" value="Update Doctor">
     </form>
 </body>
