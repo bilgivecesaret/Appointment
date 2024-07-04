@@ -48,7 +48,7 @@ public class updateDoctor extends HttpServlet {
             em.close();
             emf.close();
 
-            response.sendRedirect("http://localhost:8080/Appointment/showDoctors.jsp");
+            response.sendRedirect("http://localhost:8080/Appointment/admin/showDoctors.jsp");
         } catch (Exception e) {
             e.printStackTrace();
             response.sendRedirect("http://localhost:8080/Appointment/notFound.jsp");
