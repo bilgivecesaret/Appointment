@@ -8,7 +8,7 @@
     <ul>
         <li><a href="http://localhost:8080/Appointment/doctor/showAppointments">Show Appointments</a></li>
     </ul>
-    <form action="logoutServlet" method="post">
+    <form action="http://localhost:8080/Appointment/doctorLogout" method="post">
         <input type="submit" value="Logout">
     </form>
 </body>
