@@ -56,8 +56,8 @@
                                 <form class="row g-3" action="appAppointment" method="post">
                                     <input type="hidden" name="userid" value="${userObj.id }"> 
                                     <div class="col-md-6">
-                                        <label for="diseases" class="form-label">Department</label> 
-                                        <select required class="form-control" name="doctor">
+                                        <label for="department" class="form-label">Department</label> 
+                                        <select required class="form-control" name="department" id="one" onchange="showSecondDropdown()">
                                             <option value="">--select--</option>
                                                 <%
                                                 DepartmentDAO departments = new DepartmentDAO();
@@ -96,7 +96,7 @@
                                     </div>    
                                     <div class="col-md-6">
                                         <label for="doctor" class="form-label">Doctor</label> 
-                                        <select required class="form-control" name="doctor">
+                                        <select required class="form-control" name="doctor" id="two" disabled>
                                             <option value="">--select--</option>
                                                 <%
                                                 DoctorDAO doctors = new DoctorDAO();
@@ -123,5 +123,17 @@
             </div>
         </div>
         <%@include file="../component/footer.jsp"%>
+        <script>
+        function showSecondDropdown() {
+            var firstSelect = document.getElementById("one");
+            var secondSelect = document.getElementById("two");
+            
+            if (firstSelect.value === "") {
+                secondSelect.setAttribute("disabled", "disabled");
+            } else {
+                secondSelect.removeAttribute("disabled");
+            }
+        }
+    </script>
     </body>
 </html>
