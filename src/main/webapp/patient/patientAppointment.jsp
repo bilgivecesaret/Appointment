@@ -54,11 +54,10 @@
                                         <p class=" fs-4 text-center text-success">${succMsg}</p>
                                         <c:remove var="succMsg" scope="session" />
                                 </c:if>
-                                <form class="row g-3" action="http://localhost:8080/Appointment/appAppointment" method="post">
-                                    <input type="hidden" name="userid" value="${userObj.id }"> 
+                                <form class="row g-3" action="http://localhost:8080/Appointment/addAppointment" method="post">
                                     <div class="col-md-6">
-                                        <label for="department" class="form-label">Department</label> 
-                                        <select required class="form-control" name="department" id="one" onchange="showSecondDropdown()">
+                                        <label for="departmentId" class="form-label">Department</label> 
+                                        <select required class="form-control" name="departmentId" id="one" onchange="showSecondDropdown()">
                                             <option value="">--select--</option>                                              
                                         </select>
                                     </div>
@@ -86,12 +85,12 @@
                                         </select>
                                     </div>    
                                     <div class="col-md-6">
-                                        <label for="doctor" class="form-label">Doctor</label> 
-                                        <select required class="form-control" name="doctor" id="two" disabled>
+                                        <label for="doctorId" class="form-label">Doctor</label> 
+                                        <select required class="form-control" name="doctorId" id="two" disabled>
                                             <option value="">--select--</option>
                                         </select>
                                     </div>
-                                    <button class="col-md-6 offset-md-3 btn btn-success">Save</button>                                    
+                                    <button type="submit" class="col-md-6 offset-md-3 btn btn-success">Save</button>                                    
                                 </form>
                                 <div class="row g-3" style="margin-top: 10px">
                                     <a href="http://localhost:8080/Appointment/patient/patientAppointment.jsp" >
@@ -115,6 +114,7 @@
                 secondSelect.removeAttribute("disabled");
             }
         }
+                    
         $(document).ready(function() {
             // Departmanlarý yükle
             $.ajax({
