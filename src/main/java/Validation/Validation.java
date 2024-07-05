@@ -4,6 +4,16 @@ import java.util.regex.Pattern;
 
 public class Validation {
    
+    public static boolean checkFullname(String fullname) {
+    String fullnameRegex = "^[a-zA-Z]{2,}\\s+[a-zA-Z]{2,}$";
+        return Pattern.matches(fullnameRegex, fullname);
+    }
+    
+    public static boolean checkPhone(String phone) {
+    String phoneRegex = "^5\\d{9}$";
+        return Pattern.matches(phoneRegex, phone);
+    }
+        
     public static boolean checkEmail(String email) {
     String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
         return Pattern.matches(emailRegex, email);
@@ -15,7 +25,7 @@ public class Validation {
     }
    
     public static boolean checkUsername(String username) {
-        String usernameRegex = "^[a-zA-Z0-9]{3,20}$";
+        String usernameRegex = "^[a-zA-Z][a-zA-Z0-9]{2,20}$";
         return Pattern.matches(usernameRegex, username);
     }
    

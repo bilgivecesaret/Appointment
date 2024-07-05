@@ -34,17 +34,17 @@
                     </c:if>
 
 
-                    <form action="patientRegister" method="post">
+                    <form action="../patientRegister" method="post">
                         <div class="mb-3">
-                            <label class="form-label">TC Number</label> 
+                            <label for="tc" class="form-label">TC Number</label> 
+                            <input required name="tc" type="text" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label for="fullname" class="form-label">Full Name</label> 
                             <input required name="fullname" type="text" class="form-control">
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Full Name</label> 
-                            <input required name="fullname" type="text" class="form-control">
-                        </div>
-                        <div class="mb-3">
-                            <label>Gender</label> 
+                            <label for="gender">Gender</label> 
                             <select class="form-control" name="gender" required>
                                 <option value="">--select--</option>
                                 <option value="MALE">MALE</option>
@@ -52,18 +52,21 @@
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Phone Number</label> 
-                            <input required name="fullname" type="text" class="form-control">
+                            <label for="phone" class="form-label">Phone Number</label> 
+                            <input required name="phone" type="text" class="form-control">
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Email Address</label> 
+                            <label for="email" class="form-label">Email Address</label> 
                             <input required name="email" type="email" class="form-control">
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Password</label> 
+                            <label for="password" class="form-label">Password</label> 
                             <input required name="password" type="password" class="form-control">
                         </div>
-
+                        <div class="mb-3">
+                            <label for="password2" class="form-label">Confirm Password</label> 
+                            <input required name="password2" type="password" class="form-control">
+                        </div>
                         <button type="submit" class="btn bg-success text-white col-md-12">Save</button>
                     </form>
                 </div>
