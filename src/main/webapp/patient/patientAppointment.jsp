@@ -6,11 +6,11 @@
 <%@page import="dao.DepartmentDAO"%>
 <%@page import="java.util.List"%>
 
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-9" pageEncoding="ISO-8859-9"%>
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8">
+        <meta charset="ISO-8859-9">
         <title>Patient Appointment</title>
         <%@include file="../component/allcss.jsp"%>
         <style type="text/css">
@@ -27,6 +27,7 @@
                     background-repeat: no-repeat;
             }
         </style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     </head>
     <body>
         <c:if test="${ empty userObj }">
@@ -53,22 +54,12 @@
                                         <p class=" fs-4 text-center text-success">${succMsg}</p>
                                         <c:remove var="succMsg" scope="session" />
                                 </c:if>
-                                <form class="row g-3" action="appAppointment" method="post">
+                                <form class="row g-3" action="http://localhost:8080/Appointment/appAppointment" method="post">
                                     <input type="hidden" name="userid" value="${userObj.id }"> 
                                     <div class="col-md-6">
                                         <label for="department" class="form-label">Department</label> 
                                         <select required class="form-control" name="department" id="one" onchange="showSecondDropdown()">
-                                            <option value="">--select--</option>
-                                                <%
-                                                DepartmentDAO departments = new DepartmentDAO();
-                                                List<Department> deplist = departments.findAllDepartments();
-                                                for (Department dp : deplist) {
-                                                %>
-                                                    <option value="<%=dp.getId()%>"><%=dp.getName()%>
-                                                    </option>
-                                                <%
-                                                }
-                                                %>
+                                            <option value="">--select--</option>                                              
                                         </select>
                                     </div>
                                     <div class="col-md-6">
@@ -98,16 +89,6 @@
                                         <label for="doctor" class="form-label">Doctor</label> 
                                         <select required class="form-control" name="doctor" id="two" disabled>
                                             <option value="">--select--</option>
-                                                <%
-                                                DoctorDAO doctors = new DoctorDAO();
-                                                List<Doctor> list = doctors.findAllDoctors();
-                                                for (Doctor d : list) {
-                                                %>
-                                                <option value="<%=d.getId()%>"><%=d.getFullname()%>
-                                                </option>
-                                                <%
-                                                }
-                                                %>
                                         </select>
                                     </div>
                                     <button class="col-md-6 offset-md-3 btn btn-success">Save</button>                                    
@@ -134,6 +115,35 @@
                 secondSelect.removeAttribute("disabled");
             }
         }
+        $(document).ready(function() {
+            // Departmanlarý yükle
+            $.ajax({
+                url: 'http://localhost:8080/Appointment/getDepartments',
+                method: 'GET',
+                success: function(data) {
+                    data.forEach(function(department) {
+                        $('#one').append(new Option(department.name, department.id));
+                    });
+                }
+            });
+
+            // Departman seçildiðinde doktorlarý yükle
+            $('#one').on('change', function() {
+                var departmentId = $(this).val();
+                $('#two').empty().append(new Option("---Select---", ""));
+                if (departmentId) {
+                    $.ajax({
+                        url: 'http://localhost:8080/Appointment/getDoctors?departmentId=' + departmentId,
+                        method: 'GET',
+                        success: function(data) {
+                            data.forEach(function(doctor) {
+                                $('#two').append(new Option(doctor.name, doctor.id));
+                            });
+                        }
+                    });
+                }
+            });
+        });
     </script>
     </body>
 </html>

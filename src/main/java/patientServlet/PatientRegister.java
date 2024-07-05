@@ -36,7 +36,6 @@ public class PatientRegister extends HttpServlet {
             Query query = em.createQuery("SELECT d FROM Patient d WHERE d.tc = :tc", Patient.class);
             query.setParameter("tc", tc);
             boolean f1 = Validation.Validation.checkTc(tc);
-            boolean f2 = Validation.Validation.checkFullname(fullname);
             boolean f3 = Validation.Validation.checkPhone(phone);
             boolean f4 = Validation.Validation.checkEmail(email);
             boolean f5 = Validation.Validation.checkPassword(password);
@@ -54,9 +53,6 @@ public class PatientRegister extends HttpServlet {
                 response.sendRedirect("http://localhost:8080/Appointment/patient/signup.jsp");
             }else if(!f1){
                 session.setAttribute("errorMsg", "TC number is incorrect.");
-                response.sendRedirect("http://localhost:8080/Appointment/patient/signup.jsp");
-            }else if(!f2){    
-                session.setAttribute("errorMsg", "Fullname is incorrect.");
                 response.sendRedirect("http://localhost:8080/Appointment/patient/signup.jsp");
             }else if(!f3){ 
                 session.setAttribute("errorMsg", "Enter a mobile phone number starting with 5.");

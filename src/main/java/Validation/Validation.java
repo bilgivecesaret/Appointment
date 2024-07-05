@@ -4,11 +4,6 @@ import java.util.regex.Pattern;
 
 public class Validation {
    
-    public static boolean checkFullname(String fullname) {
-    String fullnameRegex = "^[a-zA-Z]{2,}\\s+[a-zA-Z]{2,}$";
-        return Pattern.matches(fullnameRegex, fullname);
-    }
-    
     public static boolean checkPhone(String phone) {
     String phoneRegex = "^5\\d{9}$";
         return Pattern.matches(phoneRegex, phone);

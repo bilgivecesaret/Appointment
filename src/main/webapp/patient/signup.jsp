@@ -1,11 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page isELIgnored="false" %>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-9" pageEncoding="ISO-8859-9"%>
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8">
+        <meta charset="ISO-8859-9">
     <title>Insert title here</title>
     <%@include file="../component/allcss.jsp"%>
     <style type="text/css">
@@ -34,7 +34,7 @@
                     </c:if>
 
 
-                    <form action="../patientRegister" method="post">
+                    <form action="http://localhost:8080/Appointment/patientRegister" method="post">
                         <div class="mb-3">
                             <label for="tc" class="form-label">TC Number</label> 
                             <input required name="tc" type="text" class="form-control">

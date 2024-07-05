@@ -10,13 +10,14 @@
 <%@page import="entity.Doctor"%>
 <%@page import="entity.Appointment"%>
 <%@page import="java.util.List"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page isELIgnored="false"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-9" pageEncoding="ISO-8859-9"%>
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8">
+        <meta charset="ISO-8859-9">
         <title>Your All Appointments</title>
         <%@include file="../component/allcss.jsp"%>
         <style type="text/css">
