@@ -78,9 +78,8 @@ public class AddAppointment extends HttpServlet {
                 em.getTransaction().begin();
                 em.persist(appointment);
                 em.getTransaction().commit();
-                RequestDispatcher requestDispatcher;
-                requestDispatcher=request.getRequestDispatcher("/patient/viewAppointment.jsp");
-                requestDispatcher.forward(request, response);
+                session.setAttribute("succMsg", "Your appointment has been created.");
+                response.sendRedirect("http://localhost:8080/Appointment/patient/patientAppointment.jsp");
             }
         } catch (ParseException ex) {
             session.setAttribute("errorMsg", "Server Error.");
