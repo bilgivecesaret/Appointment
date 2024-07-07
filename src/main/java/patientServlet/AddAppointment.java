@@ -28,6 +28,7 @@ public class AddAppointment extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        
         String appoint_date = request.getParameter("appoint_date");
         String appoint_time = request.getParameter("appoint_time");
         int departmentId = Integer.parseInt(request.getParameter("departmentId"));

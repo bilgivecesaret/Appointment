@@ -27,10 +27,10 @@
 
             .backImg {
                     background: linear-gradient(rgba(0, 0, 0, .4), rgba(0, 0, 0, .4)),
-                            url("img/hosp.jpg");
+                            url("../img/background3.jpg");
                     height: 30vh;
                     width: 100%;
-                    background-size: cover;
+                    object-fit: fill;
                     background-repeat: no-repeat;
             }
         </style>
@@ -46,13 +46,25 @@
                     <div class="card paint-card">
                         <div class="card-body">
                             <p class="fs-4 fw-bold text-center text-success">Appointment List</p>
+                            <c:if test="${not empty sucMsg }">
+                                <p class="text-center text-success fs-3">${sucMsg}</p>
+                                <c:remove var="sucMsg" scope="session" />
+                            </c:if>
+
+                            <c:if test="${not empty errorMsg }">
+                                <p class="text-center text-danger fs-3">${errorMsg}</p>
+                                <c:remove var="errorMsg" scope="session" />
+                            </c:if>
+                            <form id="appointmentForm" method="post">
                             <table class="table">
                                 <thead>
                                     <tr>
+                                        <th scope="col"></th>
                                         <th scope="col">Appoint Date</th>
                                         <th scope="col">Appointment Time</th>
                                         <th scope="col">Department</th>
                                         <th scope="col">Doctor</th>
+                                        <th scope="col"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -64,17 +76,32 @@
                                         for (Appointment ap : list) {                                        
                                     %>
                                     <tr>
-                                        <th><%=dateFormatter.format(ap.getAppointDate())%></th>
+                                        <td><input type="checkbox" name="appointmentIds" value="<%=ap.getId()%>"></td>
+                                        <td><%=dateFormatter.format(ap.getAppointDate())%></td>
                                         <td><%=timeFormatter.format(ap.getAppointmentTime())%></td>
                                         <td><%=ap.getDoctorId().getDepartmentId().getName()%></td>
-                                        <td><%=ap.getDoctorId().getFullname()%></td>
+                                        <td><%=ap.getDoctorId().getFullname()%></td>                                             
+                                        <td>
+                                            <input type="hidden" name="id" value="<%=ap.getId()%>">
+                                            <input type="hidden" name="appointDate" value="<%=ap.getAppointDate()%>">
+                                            <input type="hidden" name="appointTime" value="<%=ap.getAppointmentTime()%>">
+                                            <input type="hidden" name="departmentId" value="<%=ap.getDoctorId().getDepartmentId().getId()%>">
+                                            <input type="hidden" name="doctorId" value="<%=ap.getDoctorId().getId()%>">
+                                            <button type="button" class="btn bg-success text-white" 
+                                                onclick="submitForm('http://localhost:8080/Appointment/patient/updateAppointment.jsp')">Update</button> 
+                                        </td>                                        
                                     </tr>
                                     <%
                                     }}
                                     %>
                                 </tbody>
-                            </table>
-                        </div>
+                            </table>                                
+                            <p class="fs-4 fw-bold text-center text-success">                                
+                                <button type="button" class="btn bg-success text-white col-md-3" 
+                                        onclick="submitForm('http://localhost:8080/Appointment/cancelAppointment')">Cancel</button>
+                            </p>
+                            </form>
+                        </div>  
                     </div>
                 </div>
                 <div class="col-md-3 p-3">
@@ -82,5 +109,12 @@
                 </div>
             </div>
         </div>
+        <script>
+            function submitForm(action) {
+                var form = document.getElementById('appointmentForm');
+                form.action = action;
+                form.submit();
+            }
+        </script>
     </body>
 </html>
