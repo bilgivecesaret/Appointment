@@ -27,7 +27,7 @@ public class GetDoctors extends HttpServlet {
         String departmentIdParam = request.getParameter("departmentId");
         Integer departmentId = null;
         if (departmentIdParam != null && !departmentIdParam.isEmpty()) {
-            departmentId = Integer.parseInt(departmentIdParam);
+            departmentId = Integer.valueOf(departmentIdParam);
         }
 
         try {

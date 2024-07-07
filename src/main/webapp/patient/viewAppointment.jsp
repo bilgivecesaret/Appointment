@@ -81,15 +81,10 @@
                                         <td><%=timeFormatter.format(ap.getAppointmentTime())%></td>
                                         <td><%=ap.getDoctorId().getDepartmentId().getName()%></td>
                                         <td><%=ap.getDoctorId().getFullname()%></td>                                             
-                                        <td>
-                                            <input type="hidden" name="id" value="<%=ap.getId()%>">
-                                            <input type="hidden" name="appointDate" value="<%=ap.getAppointDate()%>">
-                                            <input type="hidden" name="appointTime" value="<%=ap.getAppointmentTime()%>">
-                                            <input type="hidden" name="departmentId" value="<%=ap.getDoctorId().getDepartmentId().getId()%>">
-                                            <input type="hidden" name="doctorId" value="<%=ap.getDoctorId().getId()%>">
+                                        <td>  
                                             <button type="button" class="btn bg-success text-white" 
-                                                onclick="submitForm('http://localhost:8080/Appointment/patient/updateAppointment.jsp')">Update</button> 
-                                        </td>                                        
+                                            onclick="submitForm('http://localhost:8080/Appointment/updatePage')">Update</button>                                                                                      
+                                        </td>
                                     </tr>
                                     <%
                                     }}
@@ -109,7 +104,7 @@
                 </div>
             </div>
         </div>
-        <script>
+    <script>
             function submitForm(action) {
                 var form = document.getElementById('appointmentForm');
                 form.action = action;

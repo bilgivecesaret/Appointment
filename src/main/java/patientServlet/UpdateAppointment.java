@@ -28,7 +28,7 @@ public class UpdateAppointment extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        
+        int appointmentId = Integer.parseInt(request.getParameter("id"));
         String appoint_date = request.getParameter("appoint_date");
         String appoint_time = request.getParameter("appoint_time");
         int departmentId = Integer.parseInt(request.getParameter("departmentId"));
@@ -36,23 +36,25 @@ public class UpdateAppointment extends HttpServlet {
         HttpSession session = request.getSession();
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("my_persistence_unit");
         EntityManager em = emf.createEntityManager();
-        try { 
+        try {
+            Query queryAppointment = em.createQuery("SELECT d FROM Department d WHERE d.id = :id", Appointment.class);
+            queryAppointment.setParameter("id", appointmentId);
             Query queryDepartment = em.createQuery("SELECT d FROM Department d WHERE d.id = :id", Department.class);
             queryDepartment.setParameter("id", departmentId);
             Query queryDoctor = em.createQuery("SELECT d FROM Doctor d WHERE d.id = :id", Doctor.class);
             queryDoctor.setParameter("id", doctorId);
             
-            Patient patient = (Patient) session.getAttribute("userObj"); 
-            Department department;
-            Doctor doctor;
+            Patient patient = (Patient) session.getAttribute("userObj");
+            Appointment appointment = null;
+            Department department = null;
+            Doctor doctor = null;
             try {
+                appointment = (Appointment) queryAppointment.getSingleResult();
                 department = (Department) queryDepartment.getSingleResult();
                 doctor = (Doctor) queryDoctor.getSingleResult();
             } catch (NoResultException e) {
-                department = null;
-                doctor = null;
+                session.setAttribute("errorMsg", "Server Connection Error.");
             }
-
             if (department == null) {
                 session.setAttribute("errorMsg", "Select department.");
                 response.sendRedirect("http://localhost:8080/Appointment/patient/updateAppointment.jsp");
@@ -70,7 +72,6 @@ public class UpdateAppointment extends HttpServlet {
                 Date date = dateFormatter.parse(appoint_date);
                 SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm:ss");                
                 Date time = timeFormatter.parse(appoint_time);
-                Appointment appointment = new Appointment();
                 appointment.setAppointDate(date);
                 appointment.setAppointmentTime(time);
                 appointment.setPatientId(patient);
@@ -82,7 +83,7 @@ public class UpdateAppointment extends HttpServlet {
                 response.sendRedirect("http://localhost:8080/Appointment/patient/updateAppointment.jsp");
             }
         } catch (ParseException ex) {
-            session.setAttribute("errorMsg", "Server Error.");
+            session.setAttribute("errorMsg", "User Object Error.");
         } finally {
             em.close();
             emf.close();
