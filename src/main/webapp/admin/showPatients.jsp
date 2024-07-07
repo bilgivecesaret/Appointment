@@ -45,16 +45,22 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:forEach var="patient" items="${patients}">
+                                <%
+                                    List<Patient> list = (List<Patient>) session.getAttribute("patients");                                    
+                                    if(list != null){
+                                        for (Patient p : list) {                                        
+                                    %>
                                     <tr>
-                                        <td>${patient.id}</td>
-                                        <td>${patient.fullname}</td>
-                                        <td>${patient.tc}</td>
-                                        <td>${patient.gender}</td>
-                                        <td>${patient.phone}</td>
-                                        <td>${patient.email}</td>
+                                        <td><%=p.getId() %></td>
+                                        <td><%=p.getFullname() %></td>
+                                        <td><%=p.getTc() %></td>
+                                        <td><%=p.getGender() %></td>
+                                        <td><%=p.getPhone() %></td>
+                                        <td><%=p.getEmail() %></td>
                                     </tr>
-                                </c:forEach>
+                                    <%
+                                    }}
+                                    %>
                             </tbody>
                         </table>
                     </div>

@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 package adminServlet;
+import entity.Doctor;
 
 import java.io.IOException;
 import java.util.List;
@@ -32,7 +33,7 @@ public class showDoctors extends HttpServlet {
         EntityManager em = emf.createEntityManager();
         
         Query query = em.createQuery("SELECT d FROM Doctor d");
-        List<?> doctors = query.getResultList();
+        List<Doctor> doctors = query.getResultList();
         
         request.setAttribute("doctors", doctors);
         response.sendRedirect("http://localhost:8080/Appointment/admin/showDoctors.jsp");

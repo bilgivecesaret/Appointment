@@ -45,18 +45,24 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:forEach var="doctor" items="${doctors}">
+                                <%
+                                    List<Doctor> list = (List<Doctor>) session.getAttribute("doctors");                                    
+                                    if(list != null){
+                                        for (Doctor d : list) {                                        
+                                    %>
                                     <tr>
-                                        <td>${doctor.id}</td>
-                                        <td>${doctor.username}</td>
-                                        <td>${doctor.fullName}</td>
-                                        <td>${doctor.departmentId}</td>
+                                        <td><%=d.getId() %></td>
+                                        <td><%=d.getUsername() %></td>
+                                        <td><%=d.getFullname() %></td>                                       
+                                        <td><%=d.getDepartmentId() %></td>
                                         <td>
-                                            <a href="updateDoctor.jsp?id=${doctor.id}" class="btn btn-primary">Edit</a>
-                                            <a href="deleteDoctor?id=${doctor.id}" class="btn btn-danger">Delete</a>
+                                            <a href="updateDoctor.jsp?id=<%=d.getId() %>" class="btn btn-primary">Edit</a>
+                                            <a href="deleteDoctor?id=<%=d.getId() %>" class="btn btn-danger">Delete</a>
                                         </td>
                                     </tr>
-                                </c:forEach>
+                                    <%
+                                    }}
+                                    %>
                             </tbody>
                         </table>
                     </div>
