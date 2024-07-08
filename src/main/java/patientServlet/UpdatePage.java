@@ -20,22 +20,23 @@ public class UpdatePage extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        String[] apIds = request.getParameterValues("appointmentIds");
         HttpSession session = request.getSession();
-        if(request.getParameter("appointmentIds")==null || request.getParameter("appointmentIds") == ""){
-            session.setAttribute("errorMsg", "Make one choise.");
+        if(apIds ==null || apIds.length <= 0){
+            session.setAttribute("errorMsg", "You haven't make any choice.");
             response.sendRedirect("http://localhost:8080/Appointment/patient/viewAppointment.jsp");
-            return;
-        }
-        int appointmentId = Integer.parseInt(request.getParameter("appointmentIds"));        
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("my_persistence_unit");
-        EntityManager em = emf.createEntityManager();        
-        try {
-            Appointment appointment = em.find(Appointment.class, appointmentId);            
-            session.setAttribute("appointment", appointment);
-            response.sendRedirect("http://localhost:8080/Appointment/patient/updateAppointment.jsp");
-        } finally {
+        }else if (apIds.length==1) {
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("my_persistence_unit");
+            EntityManager em = emf.createEntityManager();
+            Appointment c = new Appointment();
+            c = em.find(Appointment.class, Integer.parseInt(apIds[0]));
+            session.setAttribute("appointment", c);            
             em.close();
             emf.close();
-        }
+            response.sendRedirect("http://localhost:8080/Appointment/patient/updateAppointment.jsp");
+        }else{
+            session.setAttribute("errorMsg", "You can make only one choice.");
+            response.sendRedirect("http://localhost:8080/Appointment/patient/viewAppointment.jsp");
+        }        
     }
 }

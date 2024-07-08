@@ -31,34 +31,26 @@ public class UpdateAppointment extends HttpServlet {
         int appointmentId = Integer.parseInt(request.getParameter("id"));
         String appoint_date = request.getParameter("appoint_date");
         String appoint_time = request.getParameter("appoint_time");
-        int departmentId = Integer.parseInt(request.getParameter("departmentId"));
         int doctorId = Integer.parseInt(request.getParameter("doctorId"));
         HttpSession session = request.getSession();
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("my_persistence_unit");
         EntityManager em = emf.createEntityManager();
         try {
-            Query queryAppointment = em.createQuery("SELECT d FROM Department d WHERE d.id = :id", Appointment.class);
+            Query queryAppointment = em.createQuery("SELECT d FROM Appointment d WHERE d.id = :id", Appointment.class);
             queryAppointment.setParameter("id", appointmentId);
-            Query queryDepartment = em.createQuery("SELECT d FROM Department d WHERE d.id = :id", Department.class);
-            queryDepartment.setParameter("id", departmentId);
             Query queryDoctor = em.createQuery("SELECT d FROM Doctor d WHERE d.id = :id", Doctor.class);
             queryDoctor.setParameter("id", doctorId);
             
             Patient patient = (Patient) session.getAttribute("userObj");
-            Appointment appointment = null;
-            Department department = null;
-            Doctor doctor = null;
+            Appointment appointment = new Appointment();
+            Doctor doctor = new Doctor();
             try {
-                appointment = (Appointment) queryAppointment.getSingleResult();
-                department = (Department) queryDepartment.getSingleResult();
+                appointment = (Appointment) queryAppointment.getSingleResult();                
                 doctor = (Doctor) queryDoctor.getSingleResult();
             } catch (NoResultException e) {
                 session.setAttribute("errorMsg", "Server Connection Error.");
             }
-            if (department == null) {
-                session.setAttribute("errorMsg", "Select department.");
-                response.sendRedirect("http://localhost:8080/Appointment/patient/updateAppointment.jsp");
-            }else if (doctor == null) {
+            if (doctor == null) {
                 session.setAttribute("errorMsg", "Select doctor.");
                 response.sendRedirect("http://localhost:8080/Appointment/patient/updateAppointment.jsp");
             }else if(appoint_date == null || appoint_date == ""){ 
@@ -79,7 +71,7 @@ public class UpdateAppointment extends HttpServlet {
                 em.getTransaction().begin();
                 em.merge(appointment);
                 em.getTransaction().commit();
-                session.setAttribute("succMsg", "Your appointment has been created.");
+                session.setAttribute("succMsg", "Your appointment has been updated.");
                 response.sendRedirect("http://localhost:8080/Appointment/patient/updateAppointment.jsp");
             }
         } catch (ParseException ex) {

@@ -16,7 +16,7 @@
 
         .backImg {
                 background: linear-gradient(rgba(0, 0, 0, .4), rgba(0, 0, 0, .4)),
-                        url("img/background5.jpg");
+                        url("../img/background2.jpg");
                 height: 40vh;
                 width: 100%;
                 background-size: cover;
@@ -54,13 +54,11 @@
                             SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm:ss");
                         %>
 
-                        <form class="row g-3" action="http://localhost:8080/Appointment/updateAppointment" method="post">
+                        <form id="appform" class="row g-3" action="http://localhost:8080/Appointment/updateAppointment" method="post">
                             <input type="hidden" name="id" value="${appointment.id}">
                             <div class="col-md-6">
                                 <label for="departmentId" class="form-label">Department</label> 
-                                <select disabled class="form-control" name="departmentId" id="one">
-                                    <option value="">--select--</option>
-                                </select>
+                                <select required class="form-control" name="departmentId" id="one" disabled></select>
                             </div>
                             <div class="col-md-6">
                                 <label for="appoint_date" class="form-label">Appointment Date</label> 
@@ -87,9 +85,7 @@
                             </div>    
                             <div class="col-md-6">
                                 <label for="doctorId" class="form-label">Doctor</label> 
-                                <select required class="form-control" name="doctorId" id="two">
-                                    <option value="">--select--</option>
-                                </select>
+                                <select required class="form-control" name="doctorId" id="two"></select>
                             </div>
                             <button type="submit" class="col-md-6 offset-md-3 btn btn-success">Update</button>                                    
                         </form>                                        
@@ -104,9 +100,8 @@
         </div>
     </div>
     <%@include file="../component/footer.jsp"%>
-    <script>                    
+    <script>        
         $(document).ready(function() {
-            // Departmanlarý yükle
             $.ajax({
                 url: 'http://localhost:8080/Appointment/getDepartments',
                 method: 'GET',
@@ -114,17 +109,11 @@
                     data.forEach(function(department) {
                         $('#one').append(new Option(department.name, department.id));
                     });
-                    $('#one').val(<%=appointment.getDoctorId().getDepartmentId().getId()%>); // Set the department value after loading
+                    $('#one').val('<%=appointment.getDoctorId().getDepartmentId().getId()%>');
                     if ($('#one').val()) {
                         loadDoctors($('#one').val(), '<%=appointment.getDoctorId().getId()%>');
                     }
                 }
-            });
-
-            // Departman seçildiðinde doktorlarý yükle
-            $('#one').on('load', function() {
-                var departmentId = $(this).val();
-                loadDoctors(departmentId);
             });
         });
 
@@ -143,8 +132,8 @@
                         }
                     }
                 });
-            }
-        }
+            }     
+        };              
     </script>
     </body>
 </html>
