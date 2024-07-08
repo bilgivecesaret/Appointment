@@ -32,6 +32,7 @@ public class showAppointments extends HttpServlet {
         Doctor doctor = (Doctor) session.getAttribute("doctor");
 
         if (doctor == null) {
+            request.setAttribute("errorMsg", "You must be logged in to view appointments.");
             request.getRequestDispatcher("doctorLogin.jsp").forward(request, response);
             return;
         }
@@ -44,8 +45,18 @@ public class showAppointments extends HttpServlet {
             query.setParameter("doctorId", doctor.getId());
 
             List<Appointment> appointments = query.getResultList();
-            request.setAttribute("appointments", appointments);
-            response.sendRedirect("http://localhost:8080/Appointment/doctor/showAppointments.jsp");
+            
+            if (appointments.isEmpty()) {
+                request.setAttribute("errorMsg", "No appointments found.");
+                
+            } else {
+                request.setAttribute("appointments", appointments);
+                request.setAttribute("sucMsg", "Apppointments loaded successfully.");
+            }
+            request.getRequestDispatcher("http://localhost:8080/Appointment/doctor/showAppointments.jsp").forward(request, response);
+        } catch (Exception e) {
+            request.setAttribute("errorMsg", "Server error");
+            request.getRequestDispatcher("http://localhost:8080/Appointment/doctor/showAppointments.jsp").forward(request, response);
         } finally {
             em.close();
             emf.close();
