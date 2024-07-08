@@ -9,9 +9,9 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.servlet.ServletException;
@@ -29,30 +29,31 @@ public class AddAppointment extends HttpServlet {
             throws ServletException, IOException {
         
         
+        HttpSession session = request.getSession();
+        Patient patient = (Patient) session.getAttribute("userObj");
         String appoint_date = request.getParameter("appoint_date");
         String appoint_time = request.getParameter("appoint_time");
         int departmentId = Integer.parseInt(request.getParameter("departmentId"));
         int doctorId = Integer.parseInt(request.getParameter("doctorId"));
-        HttpSession session = request.getSession();
+        
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("my_persistence_unit");
         EntityManager em = emf.createEntityManager();
         try { 
+            Query queryPatientAppointments = em.createQuery("SELECT d FROM Appointment d WHERE d.patientId.id = :id", Appointment.class);
+            queryPatientAppointments.setParameter("id", patient.getId());            
             Query queryDepartment = em.createQuery("SELECT d FROM Department d WHERE d.id = :id", Department.class);
             queryDepartment.setParameter("id", departmentId);
             Query queryDoctor = em.createQuery("SELECT d FROM Doctor d WHERE d.id = :id", Doctor.class);
             queryDoctor.setParameter("id", doctorId);
 
-            Patient patient = (Patient) session.getAttribute("userObj");            
-            Department department;
-            Doctor doctor;
-            try {
-                department = (Department) queryDepartment.getSingleResult();
-                doctor = (Doctor) queryDoctor.getSingleResult();
-            } catch (NoResultException e) {
-                department = null;
-                doctor = null;
-            }
-
+            
+            List<Appointment> appointmentsOfPatient = queryPatientAppointments.getResultList();
+            Department department = (Department) queryDepartment.getSingleResult();
+            Doctor doctor = (Doctor) queryDoctor.getSingleResult(); 
+            
+            Query queryDoctorAppointments = em.createQuery("SELECT d FROM Appointment d WHERE d.doctorId.id = :id", Appointment.class);
+            queryDoctorAppointments.setParameter("id",doctor.getId());
+            List<Appointment> appointmentsOfDoctor = queryDoctorAppointments.getResultList();
             if (department == null) {
                 session.setAttribute("errorMsg", "Select department.");
                 response.sendRedirect("http://localhost:8080/Appointment/patient/patientAppointment.jsp");
@@ -65,11 +66,25 @@ public class AddAppointment extends HttpServlet {
             }else if(appoint_time == null || appoint_time == ""){  
                 session.setAttribute("errorMsg", "Select appointment time.");
                 response.sendRedirect("http://localhost:8080/Appointment/patient/patientAppointment.jsp");
-            } else {
+            }else{            
                 SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
                 Date date = dateFormatter.parse(appoint_date);
                 SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm:ss");                
                 Date time = timeFormatter.parse(appoint_time);
+                for(Appointment ap: appointmentsOfPatient){
+                    if((ap.getAppointDate().equals(date)) && (ap.getDoctorId().getDepartmentId().getId().equals(doctor.getDepartmentId().getId()) )){
+                        session.setAttribute("errorMsg", "An appointment can only be made once from the same department on the same day.");
+                        response.sendRedirect("http://localhost:8080/Appointment/patient/patientAppointment.jsp");
+                        return;
+                    }                    
+                }
+                for(Appointment ap: appointmentsOfDoctor){
+                    if((ap.getAppointDate().equals(date)) && (ap.getAppointmentTime().equals(time))){
+                        session.setAttribute("errorMsg", "This appointment time is full.");
+                        response.sendRedirect("http://localhost:8080/Appointment/patient/patientAppointment.jsp");
+                        return;
+                    }
+                }                
                 Appointment appointment = new Appointment();
                 appointment.setAppointDate(date);
                 appointment.setAppointmentTime(time);
