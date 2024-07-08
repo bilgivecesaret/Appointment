@@ -1,4 +1,5 @@
 <%@ page import="entity.Doctor" %>
+<%@ page import="entity.Department" %>
 <%@ page import="javax.persistence.EntityManager" %>
 <%@ page import="javax.persistence.EntityManagerFactory" %>
 <%@ page import="javax.persistence.Persistence" %>
@@ -22,7 +23,7 @@
 
                 for (Doctor doctor : doctors) {
             %>
-                <option value="<%= doctor.getId() %>"><%= doctor.getFullname() %> - <%= doctor.getDepartmentId() %></option>
+                <option value="<%= doctor.getId() %>"><%= doctor.getFullname() %> - <%= doctor.getDepartmentId().getName() %></option>
             <%
                 }
             %>
