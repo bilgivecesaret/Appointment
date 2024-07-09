@@ -62,7 +62,7 @@
                                         <td><%=d.getId() %></td>
                                         <td><%=d.getUsername() %></td>
                                         <td><%=d.getFullname() %></td>                                       
-                                        <td><%=d.getDepartmentId() %></td>
+                                        <td><%=d.getDepartmentId().getName() %></td>
                                         <td>
                                             <a href="updateDoctor.jsp?id=<%=d.getId() %>" class="btn btn-primary">Edit</a>
                                             <a href="deleteDoctor.jsp?id=<%=d.getId() %>" class="btn btn-danger">Delete</a>
