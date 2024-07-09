@@ -25,19 +25,21 @@ public class updateDoctor extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
+        
+        int doctorId = Integer.parseInt(request.getParameter("doctorId"));
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        String fullName = request.getParameter("fullName");
+        int newDepartmentId = Integer.parseInt(request.getParameter("department"));
+
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("my_persistence_unit");
+        EntityManager em = emf.createEntityManager();
+        
         try {
-            int doctorId = Integer.parseInt(request.getParameter("doctorId"));
-            String username = request.getParameter("username");
-            String password = request.getParameter("password");
-            String fullName = request.getParameter("fullName");
-            int newDepartmentId = Integer.parseInt(request.getParameter("department"));
-
-            EntityManagerFactory emf = Persistence.createEntityManagerFactory("my_persistence_unit");
-            EntityManager em = emf.createEntityManager();
-
             em.getTransaction().begin();
             Doctor doctor = em.find(Doctor.class, doctorId);
             Department department = em.find(Department.class, newDepartmentId);
+
             if (doctor != null && department != null) {
                 doctor.setUsername(username);
                 doctor.setPassword(password);
@@ -49,12 +51,17 @@ public class updateDoctor extends HttpServlet {
                 em.getTransaction().rollback();
                 session.setAttribute("errorMsg", "Doctor or Department not found.");
             }
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            session.setAttribute("errorMsg", "An error occurred while updating the doctor.");
+            e.printStackTrace();
+        } finally {
             em.close();
             emf.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-            session.setAttribute("errorMsg", "An error occurred while updating the doctor.");
         }
+        
         response.sendRedirect("http://localhost:8080/Appointment/admin/showDoctors.jsp");
     }
 }
