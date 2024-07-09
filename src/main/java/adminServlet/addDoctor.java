@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -23,23 +24,41 @@ public class addDoctor extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
         String name = request.getParameter("name");
-        String department = request.getParameter("department");
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        int departmentId = Integer.parseInt(request.getParameter("department"));
 
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("my_persistence_unit");
         EntityManager em = emf.createEntityManager();
 
-        em.getTransaction().begin();
-        Doctor doctor = new Doctor();
-        doctor.setFullname(name);
-        Department d = new Department();
-        d = em.find(Department.class, department);
-        doctor.setDepartmentId(d);
-        em.persist(doctor);
-        em.getTransaction().commit();
-
-        em.close();
-        emf.close();
+        try {
+            em.getTransaction().begin();
+            Department department = em.find(Department.class, departmentId);
+            if (department != null) {
+                Doctor doctor = new Doctor();
+                doctor.setFullname(name);
+                doctor.setUsername(username);
+                doctor.setPassword(password);
+                doctor.setDepartmentId(department);
+                em.persist(doctor);
+                em.getTransaction().commit();
+                session.setAttribute("sucMsg", "Doctor added successfully.");
+            } else {
+                em.getTransaction().rollback();
+                session.setAttribute("errorMsg", "Department not found.");
+            }
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            session.setAttribute("errorMsg", "An error occurred while adding the doctor.");
+            e.printStackTrace();
+        } finally {
+            em.close();
+            emf.close();
+        }
 
         response.sendRedirect("http://localhost:8080/Appointment/admin/showDoctors.jsp");
     }
