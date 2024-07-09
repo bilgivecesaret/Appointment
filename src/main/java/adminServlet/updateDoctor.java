@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.servlet.http.HttpSession;
 
 
 /**
@@ -23,38 +24,37 @@ public class updateDoctor extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
         try {
             int doctorId = Integer.parseInt(request.getParameter("doctorId"));
             String username = request.getParameter("username");
             String password = request.getParameter("password");
             String fullName = request.getParameter("fullName");
-            String newDepartment = request.getParameter("department");
+            int newDepartmentId = Integer.parseInt(request.getParameter("department"));
 
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("my_persistence_unit");
             EntityManager em = emf.createEntityManager();
 
             em.getTransaction().begin();
             Doctor doctor = em.find(Doctor.class, doctorId);
-            if (doctor != null) {
+            Department department = em.find(Department.class, newDepartmentId);
+            if (doctor != null && department != null) {
                 doctor.setUsername(username);
                 doctor.setPassword(password);
                 doctor.setFullname(fullName);
-                Department d = new Department();
-                d = em.find(Department.class, newDepartment);
-                doctor.setDepartmentId(d);
+                doctor.setDepartmentId(department);
+                em.getTransaction().commit();
+                session.setAttribute("sucMsg", "Doctor updated successfully.");
+            } else {
+                em.getTransaction().rollback();
+                session.setAttribute("errorMsg", "Doctor or Department not found.");
             }
-            em.getTransaction().commit();
-
             em.close();
             emf.close();
-
-            response.sendRedirect("http://localhost:8080/Appointment/admin/showDoctors.jsp");
         } catch (Exception e) {
             e.printStackTrace();
-            response.sendRedirect("http://localhost:8080/Appointment/notFound.jsp");
+            session.setAttribute("errorMsg", "An error occurred while updating the doctor.");
         }
+        response.sendRedirect("http://localhost:8080/Appointment/admin/showDoctors.jsp");
     }
 }
-
-
-
