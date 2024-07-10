@@ -21,13 +21,7 @@ import javax.servlet.http.HttpSession;
 public class adminLogin extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
-    
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("adminLogin.jsp");
-        dispatcher.forward(request, response);
-    }
-    
+       
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();

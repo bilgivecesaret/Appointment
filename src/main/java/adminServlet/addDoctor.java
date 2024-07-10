@@ -63,4 +63,3 @@ public class addDoctor extends HttpServlet {
         response.sendRedirect("http://localhost:8080/Appointment/admin/showDoctors.jsp");
     }
 }
-

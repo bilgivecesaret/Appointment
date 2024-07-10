@@ -34,11 +34,11 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" 
-                       href="http://localhost:8080/Appointment/admin/showDoctors.jsp">SHOW DOCTORS</a>
+                       href="http://localhost:8080/Appointment/showDoctors">SHOW DOCTORS</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" 
-                       href="http://localhost:8080/Appointment/admin/showPatients.jsp">SHOW PATIENTS</a>
+                       href="http://localhost:8080/Appointment/showPatient">SHOW PATIENTS</a>
                 </li>
             <%}%>
                 <div class="dropdown">

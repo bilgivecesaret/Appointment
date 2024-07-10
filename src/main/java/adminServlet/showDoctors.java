@@ -1,10 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
-package adminServlet;
-import entity.Doctor;
 
+package adminServlet;
+
+import entity.Doctor;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -16,6 +13,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import javax.servlet.http.HttpSession;
 
 
 /**
@@ -32,10 +30,11 @@ public class showDoctors extends HttpServlet {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("my_persistence_unit");
         EntityManager em = emf.createEntityManager();
         
-        Query query = em.createQuery("SELECT d FROM Doctor d");
+        Query query = em.createQuery("SELECT d FROM Doctor d",Doctor.class);
         List<Doctor> doctors = query.getResultList();
+        HttpSession session = request.getSession(false);
         
-        request.setAttribute("doctors", doctors);
+        session.setAttribute("docs", doctors);
         response.sendRedirect("http://localhost:8080/Appointment/admin/showDoctors.jsp");
         
         em.close();

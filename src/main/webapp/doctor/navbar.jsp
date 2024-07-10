@@ -31,7 +31,7 @@
             <%}else{%>
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" 
-                        href="http://localhost:8080/Appointment/doctor/showAppointments.jsp">SHOW APPOINTMENT</a>
+                        href="http://localhost:8080/Appointment/showAppointments">SHOW APPOINTMENT</a>
                 </li>
             <%}%>
                 <div class="dropdown">

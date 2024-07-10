@@ -17,6 +17,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -32,13 +33,11 @@ public class showPatient extends HttpServlet {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("my_persistence_unit");
         EntityManager em = emf.createEntityManager();
 
-        Query query = em.createQuery("SELECT p FROM Patient p");
+        Query query = em.createQuery("SELECT p FROM Patient p",Patient.class);
         List<Patient> patients = query.getResultList();
-
-        request.setAttribute("patients", patients);
-        /*response.sendRedirect("http://localhost:8080/Appointment/admin/showPatients.jsp");*/
-        RequestDispatcher dispatcher = request.getRequestDispatcher("http://localhost:8080/Appointment/admin/showPatients.jsp");
-        dispatcher.forward(request, response);
+        HttpSession session = request.getSession(false);
+        session.setAttribute("pats", patients);
+        response.sendRedirect("http://localhost:8080/Appointment/admin/showPatients.jsp");
 
         em.close();
         emf.close();

@@ -28,7 +28,7 @@ public class showAppointments extends HttpServlet {
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
+        HttpSession session = request.getSession(false);
         Doctor doctor = (Doctor) session.getAttribute("doctor");
 
         if (doctor == null) {
@@ -47,16 +47,16 @@ public class showAppointments extends HttpServlet {
             List<Appointment> appointments = query.getResultList();
             
             if (appointments.isEmpty()) {
-                request.setAttribute("errorMsg", "No appointments found.");
+                session.setAttribute("errorMsg", "No appointments found.");
                 
             } else {
-                request.setAttribute("appointments", appointments);
-                request.setAttribute("sucMsg", "Apppointments loaded successfully.");
+                session.setAttribute("appointments", appointments);
+                session.setAttribute("sucMsg", "Apppointments loaded successfully.");
             }
-            request.getRequestDispatcher("http://localhost:8080/Appointment/doctor/showAppointments.jsp").forward(request, response);
+            response.sendRedirect("http://localhost:8080/Appointment/doctor/showAppointments.jsp");
         } catch (Exception e) {
             request.setAttribute("errorMsg", "Server error");
-            request.getRequestDispatcher("http://localhost:8080/Appointment/doctor/showAppointments.jsp").forward(request, response);
+            response.sendRedirect("http://localhost:8080/Appointment/doctor/showAppointments.jsp");
         } finally {
             em.close();
             emf.close();

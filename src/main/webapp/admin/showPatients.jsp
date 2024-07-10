@@ -14,7 +14,7 @@
         }
         .backImg {
             background: linear-gradient(rgba(0, 0, 0, .4), rgba(0, 0, 0, .4)),
-            url("img/hosp.jpg");
+            url("../img/background1.jpg");
             height: 30vh;
             width: 100%;
             background-size: cover;
@@ -46,7 +46,7 @@
                             </thead>
                             <tbody>
                                 <%
-                                    List<Patient> list = (List<Patient>) session.getAttribute("patients");                                    
+                                    List<Patient> list = (List<Patient>) session.getAttribute("pats");                                    
                                     if(list != null){
                                         for (Patient p : list) {                                        
                                     %>
