@@ -41,7 +41,7 @@ public class showAppointments extends HttpServlet {
         EntityManager em = emf.createEntityManager();
 
         try {
-            Query query = em.createQuery("SELECT a FROM Appointment a WHERE a.doctorId = :doctorId");
+            Query query = em.createQuery("SELECT a FROM Appointment a WHERE a.doctorId.id = :doctorId",Appointment.class);
             query.setParameter("doctorId", doctor.getId());
 
             List<Appointment> appointments = query.getResultList();

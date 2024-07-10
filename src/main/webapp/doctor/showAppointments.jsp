@@ -58,9 +58,8 @@
                             <form id="appointmentForm" method="post">
                             <table class="table">
                                 <thead>
-                                    <tr>
-                                        <th scope="col"></th>
-                                        <th scope="col">Appoint Date</th>
+                                    <tr>                                        
+                                        <th scope="col">Appointment Date</th>
                                         <th scope="col">Appointment Time</th>
                                         <th scope="col">Patient</th>
                                         <th scope="col"></th>
@@ -74,8 +73,7 @@
                                     if(list != null){
                                         for (Appointment ap : list) {                                        
                                     %>
-                                    <tr>
-                                        <td><input type="checkbox" name="appointmentIds" value="<%=ap.getId()%>"></td>
+                                    <tr>                                        
                                         <td><%=dateFormatter.format(ap.getAppointDate())%></td>
                                         <td><%=timeFormatter.format(ap.getAppointmentTime())%></td>
                                         <td><%=ap.getPatientId().getFullname()%></td>                                             

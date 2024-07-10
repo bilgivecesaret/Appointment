@@ -16,6 +16,7 @@ public class doctorLogout extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         session.removeAttribute("doctor");
+        session.removeAttribute("appointments");
         response.sendRedirect("http://localhost:8080/Appointment/doctor/doctorLogin.jsp");
         
     }

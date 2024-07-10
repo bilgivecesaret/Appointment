@@ -60,7 +60,7 @@
                                 <thead>
                                     <tr>
                                         <th scope="col"></th>
-                                        <th scope="col">Appoint Date</th>
+                                        <th scope="col">Appointment Date</th>
                                         <th scope="col">Appointment Time</th>
                                         <th scope="col">Department</th>
                                         <th scope="col">Doctor</th>
