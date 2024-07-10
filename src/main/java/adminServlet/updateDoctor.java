@@ -1,4 +1,3 @@
-
 package adminServlet;
 
 import entity.Department;
@@ -24,50 +23,45 @@ public class updateDoctor extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int doctorId = Integer.parseInt(request.getParameter("id"));
-
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("my_persistence_unit");
-        EntityManager em = emf.createEntityManager();
-
-        Doctor doctor = em.find(Doctor.class, doctorId);
-        List<Department> departments = em.createQuery("SELECT d FROM Department d", Department.class).getResultList();
-
-        em.close();
-        emf.close();
-
-        HttpSession session = request.getSession();
-        session.setAttribute("docs", doctor);
-        session.setAttribute("departments", departments);
-
-        response.sendRedirect("http://localhost:8080/Appointment/admin/updateDoctor.jsp");
-    }
-
-    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int doctorId = Integer.parseInt(request.getParameter("id"));
-        String fullname = request.getParameter("fullname");
+        HttpSession session = request.getSession();
+        
+        int doctorId = Integer.parseInt(request.getParameter("doctorId"));
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        int departmentId = Integer.parseInt(request.getParameter("department"));
+        String fullName = request.getParameter("fullName");
+        int newDepartmentId = Integer.parseInt(request.getParameter("department"));
 
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("my_persistence_unit");
         EntityManager em = emf.createEntityManager();
+        
+        try {
+            em.getTransaction().begin();
+            Doctor doctor = em.find(Doctor.class, doctorId);
+            Department department = em.find(Department.class, newDepartmentId);
 
-        em.getTransaction().begin();
-        Doctor doctor = em.find(Doctor.class, doctorId);
-        doctor.setFullname(fullname);
-        doctor.setUsername(username);
-        doctor.setPassword(password);
-        doctor.setDepartmentId(em.find(Department.class, departmentId));
-        em.getTransaction().commit();
-
-        em.close();
-        emf.close();
-
-        HttpSession session = request.getSession();
-        session.setAttribute("sucMsg", "Doctor updated successfully");
-
+            if (doctor != null && department != null) {
+                doctor.setUsername(username);
+                doctor.setPassword(password);
+                doctor.setFullname(fullName);
+                doctor.setDepartmentId(department);
+                em.getTransaction().commit();
+                session.setAttribute("sucMsg", "Doctor updated successfully.");
+            } else {
+                em.getTransaction().rollback();
+                session.setAttribute("errorMsg", "Doctor or Department not found.");
+            }
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            session.setAttribute("errorMsg", "An error occurred while updating the doctor.");
+            e.printStackTrace();
+        } finally {
+            em.close();
+            emf.close();
+        }
+        
         response.sendRedirect("http://localhost:8080/Appointment/admin/showDoctors.jsp");
     }
 }
