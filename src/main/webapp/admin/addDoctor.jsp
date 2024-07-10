@@ -3,15 +3,12 @@
 <%@ page import="javax.persistence.EntityManagerFactory" %>
 <%@ page import="javax.persistence.Persistence" %>
 <%@ page import="java.util.List" %>
-<<<<<<< Updated upstream
-=======
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page isELIgnored="false"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-9" pageEncoding="ISO-8859-9"%>
->>>>>>> Stashed changes
 <!DOCTYPE html>
 <html>
-<head>
+    <head>
         <meta charset="ISO-8859-9">
         <title>Add Doctor</title>
         <%@include file="../component/allcss.jsp"%>
@@ -32,38 +29,6 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     </head>
 <body>
-<<<<<<< Updated upstream
-    <h2>Add Doctor</h2>
-    <form action="http://localhost:8080/Appointment/addDoctor" method="post">
-        <label for="name">Full Name:</label>
-        <input type="text" id="name" name="name" required><br>
-
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br>
-
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required><br>
-
-        <label for="department">Select Department:</label>
-        <select id="department" name="department" required>
-            <%
-                EntityManagerFactory emf = Persistence.createEntityManagerFactory("my_persistence_unit");
-                EntityManager em = emf.createEntityManager();
-                List<Department> departments = em.createQuery("SELECT d FROM Department d", Department.class).getResultList();
-                em.close();
-                emf.close();
-
-                for (Department department : departments) {
-            %>
-                <option value="<%= department.getId() %>"><%= department.getName() %></option>
-            <%
-                }
-            %>
-        </select>
-        <br>
-        <input type="submit" value="Add Doctor">
-    </form>
-=======
     <c:if test="${ empty admin }">
         <c:redirect url="http://localhost:8080/Appointment/admin/adminLogin.jsp"></c:redirect>
     </c:if>
@@ -132,7 +97,6 @@
         </div>
     </div>
     <%@include file="../component/footer.jsp"%>
->>>>>>> Stashed changes
 </body>
 </html>
 
