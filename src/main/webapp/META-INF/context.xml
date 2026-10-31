@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="/Appointment">
+  <Resource
+      name="appointment_db"
+      auth="Container"
+      type="javax.sql.DataSource"
+      driverClassName="org.h2.Driver"
+      url="jdbc:h2:file:./appointment-db;MODE=MySQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE"
+      username="sa"
+      password=""
+      maxTotal="20"
+      maxIdle="10"
+      maxWaitMillis="-1"/>
+</Context>
